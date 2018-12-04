@@ -27,52 +27,71 @@ d3.json("data/all-songs.json")
 									.domain(loudnessRange)
 									.range([0, maxWidth]);
 
-		// moderato - 110 (see https://en.wikipedia.org/wiki/Tempo)
 		// scale relative position to the basic element width
-		const moderatoTempo = 110;
+		const moderatoTempo = 80;
 		const tempoRange = d3.extent(sections, d => d.tempo);
 		const scaleTempo = d3.scaleLinear()
 							.domain([moderatoTempo, tempoRange[1]])
-							.range([0, 1]);
+							.range([0, -3]);
 
-		if (scaleTempo(tempoRange[0]) < -2) {
-			scaleTempo.domain([tempoRange[0], moderatoTempo]).range([-2, 0]);
+		if (scaleTempo(tempoRange[0]) > 1.5) {
+			scaleTempo.domain([tempoRange[0], moderatoTempo]).range([1.5, 0]);
 		}		
 
 		const allKeys = Object.keys(counter).sort((f, s) => f - s);
 		const scaleKey = d3.scalePoint()
 							.domain(allKeys)
-							.range([0, 1])
+							.range([1, 0])
 							.padding(1);
 
 		// render basic elements
 		const maxPerRow = d3.max(Object.keys(counter), (d) => counter[d]);
 		const container = d3.select("#root")
 							.append("svg")
-								.attr("width", maxWidth * maxPerRow)
+								.attr("width", 100 + maxWidth * maxPerRow)
 								.attr("height", (maxHeight + yOffset) * allKeys.length);
 		// add interactive generator
 		const buildItem = (d) => {
 			const itemHeight = maxHeight;
 			const itemHalfWidth = scaleLoudness(d.loudness) / 2;
 			const midPos = scaleKey(d.key) * itemHeight;
-			const slopePos = scaleTempo(d.tempo) * itemHalfWidth;
+			const slopePos = scaleTempo(d.tempo) * itemHalfWidth + itemHalfWidth;
 			return `M 0 ${itemHeight} 
-					Q ${-slopePos} ${midPos} ${-itemHalfWidth} ${midPos} 
-					Q ${-slopePos} ${midPos} 0 0
-					Q ${slopePos} ${midPos} ${itemHalfWidth} ${midPos} 
-					Q ${slopePos} ${midPos}0 0 ${itemHeight}`;
+					Q ${-slopePos} ${midPos * 1.1} ${-itemHalfWidth} ${midPos} 
+					Q ${-slopePos} ${midPos * 0.9} 0 0
+					Q ${slopePos} ${midPos * 0.9} ${itemHalfWidth} ${midPos} 
+					Q ${slopePos} ${midPos * 1.1}0 0 ${itemHeight}`;
 		};
 
-		container
+		const xOffset = maxWidth / 2 + 30;
+		const items = container
 			.selectAll(".element")
 			.data(demoSections).enter()
-			.append("path")
+			.append("g")
 				.attr("class", "element")
+				.attr("transform", (d, i) => 
+					`translate(${xOffset + d.order * maxWidth}, ${ (maxHeight + yOffset) * d.key })`);
+		items
+			.append("path")
 				.attr("d", (d) => buildItem(d))
-				.attr("transform", (d, i) => `translate(${maxWidth / 2 + d.order * maxWidth}, ${ (maxHeight + yOffset) * d.key })`)
 				.style("fill", "#b6c6d6")
 				.style("stroke", "steelblue");
+
+		items
+			.append("text")
+			.text(d => `${Math.round(d.tempo)}bpm`)
+			.attr("dy", 10)
+			.style("font-size", "10px")
+			.style("text-anchor", "middle");
+
+		// add key labels
+		container
+			.selectAll(".key")
+			.data(allKeys).enter()
+			.append("text")
+			.text((d) => `key:${d}`)
+			.attr('transform', d => `translate(0,${ (maxHeight + yOffset) * d + maxHeight / 2})`)
+			.style("font-size", "10px");
 	})
 	.catch((err) => {
 		console.error(err);
