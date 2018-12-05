@@ -1,6 +1,4 @@
 
-const demoSongId = 5;
-
 const width = 500;
 const height = 500;
 
@@ -30,10 +28,17 @@ d3.json("data/all-songs.json")
 								.attr("height", height)
 							.append("g")
 								.attr("transform", `translate(${width / 2}, ${ height / 2})`);
-		
-		const song = data[demoSongId];
-		renderSong(container, song, scales);
 
+		let songId = 0;		
+		const timer = setInterval(() => {
+			const song = data[songId];
+			renderSong(container, song, scales);
+			songId++;
+			if (songId >= data.length) {
+				songId = 0;
+				clearTimeout(timer);
+			}
+		}, 300);
 	})
 	.catch((err) => {
 		console.error(err);
@@ -94,7 +99,6 @@ function prepareScales(data) {
 		const keys = {};
 		sections.forEach(s => { keys[s.key] = true });
 		const allKeys = Object.keys(keys).sort((f, s) => f - s);
-		console.log(allKeys);
 		const scaleKey = d3.scalePoint()
 							.domain(allKeys)
 							.range([0, 1])
