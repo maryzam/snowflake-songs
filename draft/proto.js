@@ -23,26 +23,24 @@ d3.json("data/all-songs.json")
 		// 1. prepare data & scales
 		const scales = prepareScales(data);
 
-		//2. prepare svg
+		//2. prepare grid & svg
+		const columns = 3;
+		const rows = Math.ceil(data.length / columns);
+
 		const container = d3.select("#root")
 							.append("svg")
-								.attr("width", width)
-								.attr("height", height)
-							.append("g")
-								.attr("transform", `translate(${width / 2}, ${ height / 2})`);
+								.attr("width", width * columns)
+								.attr("height", height * rows);
 
-		//renderSong(container, data[5], scales);
-		
-		let songId = 0;		
-		const timer = setInterval(() => {
-			const song = data[songId];
-			renderSong(container, song, scales);
-			songId++;
-			if (songId >= data.length) {
-				songId = 0;
-				clearTimeout(timer);
-			}
-		}, 300);
+		// render song's snowflakes
+		data.forEach((song, id) => {
+			const currentColumn = id % 3;
+			const currentRow = Math.floor(id / 3);
+			const ph = container
+							.append("g")
+							.attr("transform", `translate(${width * (0.5 +  currentColumn)}, ${ height * (0.5 + currentRow)})`);
+			renderSong(ph, song, id, scales);
+		});
 	})
 	.catch((err) => {
 		console.error(err);
@@ -81,16 +79,16 @@ function groupSections(songData) {
 	return songData;
 }
 
-function renderSong(container, songData, scales) {
-
+function renderSong(container, songData, songId, scales) {
+		console.log(songData);
 		container.selectAll("*").remove();
-
 		let currentPos = 0;
 		let currentGroup = 0;
+
 		container
 			.append("defs")
 			.append("g")
-				.attr("id", "pattern")
+				.attr("id", `pattern_${songId}`)
 			.selectAll(".section")
 				.data(songData.sections).enter()
 				.append("path")
@@ -116,7 +114,20 @@ function renderSong(container, songData, scales) {
 
 		lines
 			.append("use")
-			.attr("xlink:href", "#pattern");
+			.attr("xlink:href", `#pattern_${songId}`);
+
+		container
+			.append("text")
+				.attr("transform", `translate(0, ${30 - height / 2})`)
+				.style("text-anchor", "middle")
+				.style("fill", "#ffffff")
+				.style("font-family", "monospace")
+			.selectAll("tspan")
+			.data(songData.Song.split("–")).enter()
+				.append("tspan")
+				.text(d => d)
+				.attr("x", 0)
+				.attr("dy", (d, idx) => idx * 15);
 }
 
 function prepareScales(data) {
