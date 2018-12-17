@@ -102,8 +102,10 @@ function renderSong(container, songData, songId, scales) {
 						return res;
 					})
 					.style("stroke", "#cbcbcb")
+					.style("stroke-width", "0.5")
 					.style("fill", d => scales.groupColor(d.group.order))
-					.style("fill-opacity", 0.5);
+					.style("fill-opacity", 0.5)
+					.style("mix-blend-mode", "soft-light");
 
 		const lines = container
 			.selectAll(".line")
@@ -165,7 +167,7 @@ function prepareScales(data) {
 
 		const scaleGroupColor = d3.scaleOrdinal()
 								.domain([0, 1, 2, 3, 4])
-								.range(["#8BA7B3", "#F0D6E3", "#F2BABD"]);
+								.range(["#216594", "#913371", "#DE7F5F"]);
 
 		return {
 			loudness: scaleLoudness,
