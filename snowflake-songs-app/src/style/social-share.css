@@ -1,0 +1,51 @@
+/*
+Social share button
+*/
+
+.button {
+  display: block;
+	margin: auto;
+  border:none;
+  background-color: #ececec;
+  text-decoration: none;
+  font-size: 18px;
+  color: #FFF;
+}
+
+.socialfloat {
+  display: block;
+  position: fixed;
+  right: 0;
+  top: 20px;
+  z-index: 9999;
+}
+
+.socialfloat .button {
+  width: 40px;
+  height: 40px;
+  color: #fff;
+}
+.socialfloat svg {
+	padding-top: 7px;
+}
+
+
+.button:hover {
+    color: #efefef;
+}
+
+.facebook {
+    background-color: #3b5998;
+}
+.gplus {
+    background-color: #dd4b39;
+}
+.twitter {
+    background-color: #55acee;
+}
+.pinterest {
+    background-color: #cc2127;
+}
+.linkedin {
+    background-color: #0077b5;
+}
