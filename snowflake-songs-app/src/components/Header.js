@@ -12,9 +12,11 @@ const Header = () => (
         <h1>Christmas songs as snowflakes</h1>
         <p>Hello</p>
 
-        <Link to={`/about`}> About </Link>
-        <Link to={`/`}> Home </Link>
-
+        <div className="navigation">
+          <Link to={`/about`}> About </Link>
+          <Link to={`/`}> Home </Link>
+        </div>
+        
         <div className="socialfloat">
 
 
