@@ -1,0 +1,14 @@
+.songs-container {
+  display: flex ;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.snowflake-card {
+   text-align: center;
+}
+
+.titleWrap {
+	max-width: 200px;
+}
