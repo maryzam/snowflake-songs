@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 const Header = () => (
     <header>
-      <div className="wrapper">
+      <div className="wrapper-width">
         <h1>Christmas songs as snowflakes</h1>
         <p>Hello</p>
 
@@ -16,7 +16,7 @@ const Header = () => (
           <Link to={`/about`}> About </Link>
           <Link to={`/`}> Home </Link>
         </div>
-        
+
         <div className="socialfloat">
 
 

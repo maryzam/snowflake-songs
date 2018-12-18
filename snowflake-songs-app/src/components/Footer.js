@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => (
     <footer>
-      <div className="wrapper">
+      <div className="wrapper-width">
         <p>Footer</p>
       </div>
     </footer>
