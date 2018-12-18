@@ -1,0 +1,40 @@
+[
+  {"Country":"United States",
+    "Population":328122000,"SongTitle":"Jim Carrey \u2013 You\u2019re A Mean One Mr. Grinch \u2013 From \u201cDr. Seuss\u2019 How The Grinch Stole Christmas\u201d Soundtrack",
+    "Spotify ID":"2KNt0BWMJwB8uEqus75mRB","energy":0.517,"speechiness":0.0862,"valence":0.504,"tempo":105.435,"duration_ms":151533,
+    "sections":[
+      {"loudness":-7.01,"start":0.0,"tempo":109.381,"key":5,"duration":9.65901},
+      {"loudness":-9.502,"start":9.65901,"tempo":106.612,"key":7,"duration":34.08234},
+      {"loudness":-7.095,"start":43.74135,"tempo":104.919,"key":7,"duration":61.38305},
+      {"loudness":-8.154,"start":105.1244,"tempo":105.691,"key":3,"duration":38.30591},
+      {"loudness":-27.565,"start":143.43031,"tempo":99.421,"key":7,"duration":8.10303}
+  ]},
+
+  {"Country":"Indonesia","Population":265015300,"SongTitle":"Amelia Ong \u2013 Let It Snow",
+    "Spotify ID":"79FztynUW6D1jETGd9qTEA","energy":0.313,"speechiness":0.0457,"valence":0.443,"tempo":130.098,"duration_ms":204893,
+    "sections":[
+      {"loudness":-11.349,"start":0.0,"tempo":129.157,"key":11,"duration":14.40654},
+      {"loudness":-8.099,"start":14.40654,"tempo":130.249,"key":9,"duration":49.81728},
+      {"loudness":-8.254,"start":64.22383,"tempo":129.337,"key":9,"duration":28.35004},
+      {"loudness":-8.679,"start":92.57387,"tempo":129.164,"key":9,"duration":12.58224},
+      {"loudness":-11.241,"start":105.15611,"tempo":130.655,"key":2,"duration":44.17814},
+      {"loudness":-8.275,"start":149.33425,"tempo":132.481,"key":7,"duration":25.99978},
+      {"loudness":-6.248,"start":175.33403,"tempo":129.076,"key":0,"duration":12.98998},
+      {"loudness":-4.097,"start":188.324,"tempo":131.069,"key":5,"duration":16.5686}
+    ]},
+
+  {"Country":"Brazil","Population":209807000,"SongTitle":"Simone \u2013 Ent\u00e3o \u00c9 Natal (Happy X-Mas)(War Is Over)",
+    "Spotify ID":"7wlVp1Tpmci5q9368PAgAN","energy":0.518,"speechiness":0.0303,"valence":0.244,"tempo":52.989,"duration_ms":256173,
+    "sections":[
+      {"loudness":-16.418,"start":0.0,"tempo":53.031,"key":0,"duration":12.94258},
+      {"loudness":-11.838,"start":12.94258,"tempo":52.96,"key":0,"duration":29.45231},
+      {"loudness":-8.468,"start":42.39488,"tempo":52.948,"key":0,"duration":26.03752},
+      {"loudness":-10.974,"start":68.4324,"tempo":52.969,"key":2,"duration":13.58457},
+      {"loudness":-6.899,"start":82.01697,"tempo":53.01,"key":0,"duration":118.48822},
+      {"loudness":-5.871,"start":200.5052,"tempo":143.528,"key":0,"duration":13.29635},
+      {"loudness":-5.217,"start":213.80154,"tempo":148.286,"key":0,"duration":4.54449},
+      {"loudness":-6.739,"start":218.34604,"tempo":141.384,"key":0,"duration":13.45642},
+      {"loudness":-6.201,"start":231.80245,"tempo":149.513,"key":0,"duration":14.1993},
+      {"loudness":-27.805,"start":246.00175,"tempo":149.155,"key":0,"duration":10.17159}
+    ]}
+]
