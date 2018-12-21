@@ -1,0 +1,18 @@
+body { background: black; }
+
+@keyframes rotation {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.snowflake-svg {
+  animation:rotation 6s linear infinite;
+}
+
+#root {
+  display: inline-block;
+}
+.snowflake-container{
+  display: inline-block;
+}
