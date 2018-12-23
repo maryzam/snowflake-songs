@@ -15,6 +15,41 @@ function getOrderColor(groupId, valence){
 	return getScaleOrderColor(groupId)(valence);
 }
 
+function getOpacity(valence) {
+	let opacity = 0.5
+	if (valence > 0.6) {
+		opacity = 0.4;
+	}
+	return opacity;
+}
+
+function getStrokeWidth(valence) {
+	let width = 0.8
+	if (valence > 0.6) {
+		width = 1;
+	}
+	return width;
+}
+
+function addGlow(svg) {
+	//Container for the gradients
+	var defs = svg.append("defs");
+
+	//Filter for the outside glow
+	var filter = defs.append("filter")
+	    .attr("id","glow");
+	filter.append("feGaussianBlur")
+	    .attr("stdDeviation","3.5")
+	    .attr("result","coloredBlur");
+
+	var feMerge = filter.append("feMerge");
+	feMerge.append("feMergeNode")
+	    .attr("in","coloredBlur");
+	feMerge.append("feMergeNode")
+	    .attr("in","SourceGraphic");
+}
+
+
 console.log("test color valence", getOrderColor(0, 0.5));
 console.log("test color valence", getOrderColor(0, 1));
 
@@ -118,6 +153,8 @@ function renderSong(container, songData, songId, scales) {
 
 		console.log(songData);
 
+		addGlow(container) ;
+
 		container
 			.append("defs")
 			.append("g")
@@ -135,13 +172,18 @@ function renderSong(container, songData, songId, scales) {
 						return res;
 					})
 					.style("stroke", "#cbcbcb")
-					.style("stroke-width", "0.5")
+					.style("stroke-width", d => {
+						return getStrokeWidth(songData.valence)
+					})
 					//.style("fill", d => scales.groupColor(d.group.order))
 					.style("fill", d => {
 						return getOrderColor(d.group.order,songData.valence);
 					})
-					.style("fill-opacity", 0.5)
-					.style("mix-blend-mode", "soft-light");
+					.style("fill-opacity", d => {
+						return getOpacity(songData.valence)
+					})
+					.style("mix-blend-mode", "hard-light")
+					.style("filter", "url(#glow)");
 
 		const lines = container
 			.selectAll(".line")
