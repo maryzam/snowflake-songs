@@ -2,6 +2,22 @@
 const width = 500;
 const height = 500;
 
+const sadColors = ['#01a89e','#2e3192','#92278f'];
+const happyColors = ['#ffc500','#ff9400', '#ed1d25'];
+
+function getScaleOrderColor(groupId) {
+	return d3.scaleLinear()
+							.domain([0, 1])
+							.range([sadColors[groupId],happyColors[groupId]]);
+}
+
+function getOrderColor(groupId, valence){
+	return getScaleOrderColor(groupId)(valence);
+}
+
+console.log("test color valence", getOrderColor(0, 0.5));
+console.log("test color valence", getOrderColor(0, 1));
+
 const buildItem = (d, scales) => {
 			const itemHeight = scales.duration(d.duration);
 			const itemHalfWidth = scales.loudness(d.loudness) / 2;
@@ -19,6 +35,8 @@ d3.json("data/all-songs.json")
 	.then((data) => {
 
 		data.forEach((song) => { groupSections(song); });
+
+		console.log(data.map((d) => {return d.valence}));
 
 		//console.log(data);
 
@@ -98,6 +116,8 @@ function renderSong(container, songData, songId, scales) {
 		let currentPos = 0;
 		let currentGroup = 0;
 
+		console.log(songData);
+
 		container
 			.append("defs")
 			.append("g")
@@ -116,7 +136,10 @@ function renderSong(container, songData, songId, scales) {
 					})
 					.style("stroke", "#cbcbcb")
 					.style("stroke-width", "0.5")
-					.style("fill", d => scales.groupColor(d.group.order))
+					//.style("fill", d => scales.groupColor(d.group.order))
+					.style("fill", d => {
+						return getOrderColor(d.group.order,songData.valence);
+					})
 					.style("fill-opacity", 0.5)
 					.style("mix-blend-mode", "soft-light");
 
@@ -193,17 +216,16 @@ function prepareScales(data) {
 		const scaleDuration = d3.scaleLinear()
 									.domain([0, maxDuration])
 									.range([0, maxHeight]);
-
-
+/*
 		const scaleGroupColor = d3.scaleOrdinal()
 								.domain([0, 1, 2, 3, 4])
-								.range(["#216594", "#913371", "#DE7F5F"]);
-
+								.range(sadColors);
+*/
 		return {
 			loudness: scaleLoudness,
 			tempo: scaleTempo,
 			key: scaleKey,
-			duration: scaleDuration,
-			groupColor: scaleGroupColor
+			duration: scaleDuration
+			//groupColor: scaleGroupColor
 		};
 };
