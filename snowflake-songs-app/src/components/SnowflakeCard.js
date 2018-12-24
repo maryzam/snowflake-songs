@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Snowflake from './Snowflake';
 
-const SnowflakeCard = ({ song, width, height }) => (
+const SnowflakeCard = ({ song, size }) => (
 
 			<div className="snowflake-card">
 
@@ -11,8 +11,7 @@ const SnowflakeCard = ({ song, width, height }) => (
 
 			        <Snowflake 
 			        	song={ song }
-			        	width={ width }
-			        	height={ height } />
+			        	size={ size } />
 
 					<div className="titleWrap">
 						<p>{ song.Song }</p>

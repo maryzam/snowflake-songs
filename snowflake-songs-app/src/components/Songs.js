@@ -12,8 +12,7 @@ const Songs = () => {
               <SnowflakeCard 
                 key={d.id} 
                 song={d} 
-                width={ 200 }
-                height={ 200 } />
+                size={ 200 }/>
             ))            
           }
         </div>
