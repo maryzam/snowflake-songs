@@ -23,9 +23,7 @@ class Snowflake extends React.PureComponent {
 		return (
 			<svg width={width} height={height} >
 				<def>
-					<g id={ `pattern_${ song.id }` }>
-						
-					</g>
+					{ this.renderSongPattern(song, width, height) }
 				</def>
 				<g>
 					{
@@ -39,6 +37,16 @@ class Snowflake extends React.PureComponent {
 					}
 				</g>
 			</svg>
+		);
+	}
+
+	renderSongPattern(song, width, height) {
+		return (
+			<g id={`pattern_${ song.id }`}>
+				{
+					song.section
+				}
+			</g>
 		);
 	}
 }

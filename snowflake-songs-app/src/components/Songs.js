@@ -3,16 +3,17 @@ import Provider from "../utils/dataProvider";
 import SnowflakeCard from "./SnowflakeCard";
 
 const Songs = () => {
-    const data = Provider.getMainInfo();
+    const data = Provider.getAllSongs();
     return (
       <div className="wrapper">
         <div className="songs-container">
           {
-            data.map((d) => (<SnowflakeCard 
-              key={d.id} 
-              song={d} 
-              width={ 200 }
-              height={ 200 } />
+            data.map((d) => (
+              <SnowflakeCard 
+                key={d.id} 
+                song={d} 
+                width={ 200 }
+                height={ 200 } />
             ))            
           }
         </div>
