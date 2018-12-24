@@ -19,7 +19,13 @@ const Song = (props) => {
       </svg>
 
       <p> {song.SongTitle} </p>
-      <iframe src={trackURL} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <iframe 
+        id={`frame_${song.id}`}
+        src={trackURL} 
+        width="300" height="80" 
+        frameBorder="0" 
+        allowtransparency="true" 
+        allow="encrypted-media"></iframe>
     </div>
   );
 

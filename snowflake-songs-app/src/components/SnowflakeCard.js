@@ -1,25 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
+import Snowflake from './Snowflake';
 
-const SnowflakeCard = (props) => (
+const SnowflakeCard = ({ song, width, height }) => (
 
 			<div className="snowflake-card">
 
-				<Link to={`/song/${props.song.id}`}>
+				<Link to={`/song/${song.id}`}>
 
-	        <svg width="200" height="200">
-
-					<circle cx="100" cy="100" r="80"/>
-
-					{/*
-	        <rect width="200" height="200" />
-					*/}
-
-	        </svg>
+			        <Snowflake 
+			        	song={ song }
+			        	width={ width }
+			        	height={ height } />
 
 					<div className="titleWrap">
-						<p>{props.song.title}</p>
+						<p>{ song.title }</p>
 					</div>
 
 				</Link>
