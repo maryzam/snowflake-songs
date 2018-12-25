@@ -56,9 +56,11 @@ const songs = source.map(processSong);
 const getTitles = () => songs.map((d) => d.Song);
 const getAllSongs = () => songs;
 const getSong = (id) => songs[id];
+const getSongUrl = (id) => `https://open.spotify.com/embed/track/${songs[id].SpotigyId}`;
 
 export default {
 	getTitles,
   getAllSongs,
-  getSong
+  getSong,
+  getSongUrl
 };

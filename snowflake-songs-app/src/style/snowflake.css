@@ -1,6 +1,7 @@
 .snowflake-card {
 	color: #dadada;
 	text-align: center;
+	max-width: 300px;
 }
 
 .snowflake-card a {

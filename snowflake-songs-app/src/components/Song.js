@@ -1,31 +1,27 @@
 import React from 'react';
 import Provider from "../utils/dataProvider";
 
-const Song = (props) => {
+import Snowflake from "./Snowflake";
+import TrackFrame from "./TrackFrame";
 
-  const num = parseInt(props.match.params.number, 10);
+const Song = ({ match }) => {
 
-  const song = Provider.getSong(num);
-  const trackURL = "https://open.spotify.com/embed/track/" + song['Spotify ID'];
-  console.log(song);
+  const id = parseInt(match.params.id, 10);
+  const song = Provider.getSong(id);
 
   return (
     <div className="song">
 
-      <svg width="500" height="500">
+      <Snowflake 
+          song={ song }
+          size={ 500 } 
+          maximize={ true }/>
 
-        <circle cx="250" cy="250" r="200"/>
+      <TrackFrame 
+        song={ song }
+        width={ 500 }
+        height={ 80 } />
 
-      </svg>
-
-      <p> {song.SongTitle} </p>
-      <iframe 
-        id={`frame_${song.id}`}
-        src={trackURL} 
-        width="300" height="80" 
-        frameBorder="0" 
-        allowtransparency="true" 
-        allow="encrypted-media"></iframe>
     </div>
   );
 

@@ -62,13 +62,13 @@ class Snowflake extends React.PureComponent {
 	scales = prepareScales();
 
 	render() {
-		const { song, size } = this.props;
-		this.updateScales(size)
+		const { song, size, maximize } = this.props;
+		this.updateScales(size, song, maximize);
 		return (
 			<svg className="snowflake"
 				width={size} height={size} >
 				<def>
-					{ this.renderSongPattern(song, size) }
+					{ this.renderSongPattern(song) }
 				</def>
 				<g transform={ `translate(${size / 2}, ${ size / 2})` }>
 					{
@@ -114,12 +114,41 @@ class Snowflake extends React.PureComponent {
 		);
 	}
 
-	updateScales(size) {
+	updateScales(size, song, maximize) {
 		const maxHeight = size / (5);
 		const maxWidth = maxHeight * 0.2;
 		this.scales.loudness.range([0, maxWidth]);
 		this.scales.duration.range([0, maxHeight]);
+		// we need to recalculate it one more time to fit exactly to fill whole svg
+		if (maximize) {
+			const scaleCoeff = this.getScaleCoeff(song, size);
+			this.scales.loudness.range([0, Math.round(maxWidth * scaleCoeff)]);
+			this.scales.duration.range([0, Math.round(maxHeight * scaleCoeff)]);
+		}
+	}
+
+	getScaleCoeff(song, size) {
+		let rayHeight = 0;
+		let currentGroup = 0;
+		let maxGroupHeight = 0;
+		song.sections.forEach((section) => {
+			let currentSectionHeight = this.scales.duration(section.duration);
+			if (currentGroup != section.group.id) {
+				currentGroup = section.group.id;
+				maxGroupHeight = currentSectionHeight;
+				rayHeight = rayHeight + maxGroupHeight + 2;
+			} else {
+				maxGroupHeight = Math.max(maxGroupHeight, currentSectionHeight);
+			}
+		});
+		rayHeight = rayHeight + maxGroupHeight;
+		return (size / 2 / rayHeight);
 	}
 }
+
+Snowflake.defaultProps = {
+	size: 300,
+	maximize: false
+};
 
 export default Snowflake;
