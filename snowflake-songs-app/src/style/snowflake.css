@@ -1,0 +1,25 @@
+.snowflake-card {
+	color: #dadada;
+	text-align: center;
+}
+
+.snowflake-card a {
+	color: #999;
+	text-decoration: none;
+	cursor: pointer;
+	font-size: 0.8em;
+}
+
+.snowflake-card small {
+	font-size: 0.7em;
+	color: #777;
+}
+
+.snowflake {}
+
+.snowflake .section path {
+	stroke: #cbcbcb;
+	stroke-width: 0.5px;
+	fill-opacity: 0.5;
+	mix-blend-mode: "soft-light";
+}

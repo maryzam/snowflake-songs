@@ -8,7 +8,7 @@ main {
   flex: 1 ;
 }
 
-.wrapper-width, main{
+.wrapper-width, main {
   max-width: 960px;
   margin: 0 auto;
 }
@@ -26,6 +26,11 @@ main {
   margin-right: 10px;
 }
 
-.titleWrap {
+.title-wrap {
 	max-width: 200px;
+}
+
+.title-wrap p {
+  text-align: center;
+  padding: 0;
 }

@@ -18,7 +18,6 @@ const buildItem = (d, scales) => {
 					Q ${slopePos} ${midPos * 1.1}0 0 ${itemHeight}`;
 		};
 
-
 const prepareScales = () => {
 	const data = Provider.getAllSongs();
 	const sections = data.flatMap(item => item.sections);
@@ -91,16 +90,11 @@ class Snowflake extends React.PureComponent {
 		let currentGroup = 0;
 
 		return (
-			<g id={`pattern_${ song.id }`}>
+			<g id={`pattern_${ song.id }`} className="section">
 				{
 					song.sections.map((section) => {
 
-						if (currentGroup != section.group.id) {
-							currentGroup = section.group.id;
-							currentPos = currentPos + this.scales.duration(section.duration) + 2;
-						}
-
-						return (
+						const element = (
 							<path 
 								key={ section.start }
 								d={ buildItem(section, this.scales) }
@@ -108,6 +102,13 @@ class Snowflake extends React.PureComponent {
 								fill={ this.scales.groupColor(section.group.order) }
 								/>
 						);
+
+						if (currentGroup != section.group.id) {
+							currentGroup = section.group.id;
+							currentPos = currentPos + this.scales.duration(section.duration) + 2;
+						}
+
+						return element;
 					})
 				}
 			</g>

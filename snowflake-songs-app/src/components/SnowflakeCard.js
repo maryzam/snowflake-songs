@@ -13,8 +13,9 @@ const SnowflakeCard = ({ song, size }) => (
 			        	song={ song }
 			        	size={ size } />
 
-					<div className="titleWrap">
-						<p>{ song.Song }</p>
+					<div className="title-wrap">
+						<p>{ song.Song.Title }</p>
+						<p><small>{ song.Song.Autor }</small></p>
 					</div>
 
 				</Link>
