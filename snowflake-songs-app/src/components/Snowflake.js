@@ -68,7 +68,7 @@ class Snowflake extends React.PureComponent {
 			<svg className="snowflake"
 				width={size} height={size} >
 				<def>
-					{ this.renderSongPattern(song) }
+					{ this.renderSongPattern(song, maximize) }
 				</def>
 				<g transform={ `translate(${size / 2}, ${ size / 2})` }>
 					{
@@ -85,20 +85,22 @@ class Snowflake extends React.PureComponent {
 		);
 	}
 
-	renderSongPattern(song) {
+	renderSongPattern(song, maximize) {
 		let currentPos = 0;
 		let currentGroup = 0;
 		return (
 			<g id={`pattern_${ song.id }`} className="section">
 				{
 					song.sections.map((section) => {
-
 						const element = (
 							<path 
 								key={ section.start }
 								d={ buildItem(section, this.scales) }
 								transform={ `translate(0, ${ currentPos })` }
-								fill={ this.scales.groupColor(section.group.order) }
+								style={{ 
+									"mix-blend-mode": "lighten",
+									fill:  this.scales.groupColor(section.group.order)
+								}}
 								/>
 						);
 
@@ -142,7 +144,7 @@ class Snowflake extends React.PureComponent {
 			}
 		});
 		rayHeight = rayHeight + maxGroupHeight;
-		return (size / 2 / rayHeight);
+		return (size / 2.5 / rayHeight);
 	}
 }
 
