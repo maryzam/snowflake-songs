@@ -88,7 +88,6 @@ class Snowflake extends React.PureComponent {
 	renderSongPattern(song) {
 		let currentPos = 0;
 		let currentGroup = 0;
-
 		return (
 			<g id={`pattern_${ song.id }`} className="section">
 				{
