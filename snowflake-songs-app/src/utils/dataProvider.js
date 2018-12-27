@@ -1,4 +1,4 @@
-import source from "../data/all-songs.json";
+import source from "../data/new-year-songs.json";
 
 const groupSections = (songData) => {
   // shared constants
@@ -33,21 +33,8 @@ const groupSections = (songData) => {
   return songData;
 }
 
-const splitSongTitle = (songTitle) => {
-   const parts = songTitle.split('–');
-   if (parts.length < 2) {
-      return { Title: songTitle };
-   }
-
-   return {
-    Autor: parts[0],
-    Title: parts[1]
-   };
-}
-
 const processSong = (song, id) => {
-  const songInfo = splitSongTitle(song.Song);
-  return Object.assign({ id }, groupSections(song), { Song: songInfo });
+  return Object.assign({ id }, groupSections(song));
 }
 // our data doen't change dynamically
 // so we don't need to recalculate it on each request to data provider
@@ -56,7 +43,7 @@ const songs = source.map(processSong);
 const getTitles = () => songs.map((d) => d.Song);
 const getAllSongs = () => songs;
 const getSong = (id) => songs[id];
-const getSongUrl = (id) => `https://open.spotify.com/embed/track/${songs[id].SpotigyId}`;
+const getSongUrl = (id) => `https://open.spotify.com/embed/track/${songs[id].track_id}`;
 
 export default {
 	getTitles,

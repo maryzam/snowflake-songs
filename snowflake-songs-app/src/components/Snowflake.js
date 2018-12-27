@@ -89,7 +89,7 @@ class Snowflake extends React.PureComponent {
 		let currentPos = 0;
 		let currentGroup = 0;
 		return (
-			<g id={`pattern_${ song.id }`} className="section">
+			<g id={`pattern_${ song.id }`} className="snowflake-section">
 				{
 					song.sections.map((section) => {
 						const element = (
@@ -97,10 +97,7 @@ class Snowflake extends React.PureComponent {
 								key={ section.start }
 								d={ buildItem(section, this.scales) }
 								transform={ `translate(0, ${ currentPos })` }
-								style={{ 
-									"mix-blend-mode": "lighten",
-									fill:  this.scales.groupColor(section.group.order)
-								}}
+								fill= { this.scales.groupColor(section.group.order) }
 								/>
 						);
 

@@ -7,7 +7,6 @@ const TrackFrame = ({ song, width, height }) => {
 
   return (
   	<div>
-  		<p> { song.Song.Title } ({song.Song.Autor}) </p>
 	    <iframe 
 	        id={`frame_${song.id}`}
 	        src={ trackUrl } 
