@@ -4,8 +4,9 @@ import './style/social-share.css';
 import './style/layout.css';
 import './style/navigation.css';
 import './style/snowflake.css';
+import './style/header.css';
 
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import Footer from "./components/Footer";
 import Main from "./components/Main";
 
