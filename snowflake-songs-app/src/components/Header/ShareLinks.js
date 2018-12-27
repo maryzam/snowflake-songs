@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookF, faTwitter, faLinkedin, faPinterest } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faTwitter, faLinkedin, faPinterest } from '@fortawesome/free-brands-svg-icons';
 
 const shareText = "The best New Year songs as Snowflakes! ❄❄❄";
+const shareImage = "TODO.jpg";
 
 const ShareLinks = () => {
 	const currentUrl = window.location.hostname;
@@ -23,13 +24,13 @@ const ShareLinks = () => {
 	        
 	        <a key="pinterest"
 	        	className="button pinterest" 
-	        	href={ `http://pinterest.com/pin/create/button/?url=${currentUrl}&description=${shareText}&media=YOUR-IMAGE-SRC`}>
+	        	href={ `http://pinterest.com/pin/create/button/?url=${currentUrl}&description=${shareText}&media=${shareImage}`}>
 	            <FontAwesomeIcon icon={faPinterest} size="lg" />
 	        </a>
 	        
 	        <a key="linkedin"
 	        	className="button linkedin" 
-	        	href={ `http://www.linkedin.com/shareArticle?mini=true&url=${currentUrl}&title=${shareText}&source=${currentUrl}` }>
+	        	href={ `http://www.linkedin.com/shareArticle?mini=true&url=${currentUrl}&title=${shareText}&source=${shareImage}` }>
 	           <FontAwesomeIcon icon={faLinkedin} size="lg" />
 	        </a>
 	    </div>

@@ -1,7 +1,28 @@
 
-header {}
+header {
+	padding: 1em;
+}
+
+header a {
+	text-decoration: none;
+	font-family: inherit;
+	color: inherit;
+}
 
 header h1,
 header h2 {
 	font-family: 'Kaushan Script', cursive;
+	color: white;
+	font-size: 3em;
+}
+
+header .autors
+{
+	font-size: 0.8em;
+	padding: 1em;
+}
+
+header .autors a {
+	text-decoration: underline;
+	font-weight: bold;
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import './style/social-share.css';
 import './style/layout.css';
-import './style/navigation.css';
 import './style/snowflake.css';
 import './style/header.css';
 
