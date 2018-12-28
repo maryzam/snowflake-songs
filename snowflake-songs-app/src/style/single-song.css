@@ -2,7 +2,7 @@
 	width: 100%;
 }
 
-.single-song .snowflake {
+.single-song .content {
 	display: flex;
 	flex-direction: row;
 }

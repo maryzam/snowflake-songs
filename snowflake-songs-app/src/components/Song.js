@@ -15,7 +15,7 @@ const Song = ({ match }) => {
   return (
     <div className="single-song">
 
-      <div className="snowflake">
+      <div className="content">
 
         { (id === 0) ? null : <NavigationButton type={ BUTTON_TYPES.PREV } songId={ id } /> }
 

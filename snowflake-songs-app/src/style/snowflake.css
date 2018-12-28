@@ -24,3 +24,15 @@
 	fill-opacity: 0.7;
 	mix-blend-mode: luminosity;
 }
+
+.snowflake:hover {
+	animation-name: spin;
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
