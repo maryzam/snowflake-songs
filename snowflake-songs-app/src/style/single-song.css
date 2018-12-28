@@ -1,0 +1,12 @@
+.single-song .snowflake {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.single-song .navigation-button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+

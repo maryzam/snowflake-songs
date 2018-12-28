@@ -4,7 +4,7 @@ import './style/social-share.css';
 import './style/layout.css';
 import './style/snowflake.css';
 import './style/header.css';
-import './style/previous-next-button.css';
+import './style/single-song.css';
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer";
