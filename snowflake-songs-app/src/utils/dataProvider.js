@@ -25,7 +25,7 @@ const groupSections = (songData) => {
       id: currentGroup,
       order: currentOrder,
     };
-    
+
     currentOrder = currentOrder + 1;
     currentDuration = currentDuration + section.duration;
   });
@@ -44,10 +44,12 @@ const getTitles = () => songs.map((d) => d.Song);
 const getAllSongs = () => songs;
 const getSong = (id) => songs[id];
 const getSongUrl = (id) => `https://open.spotify.com/embed/track/${songs[id].track_id}`;
+const getSongsLength = () => songs.length;
 
 export default {
 	getTitles,
   getAllSongs,
   getSong,
-  getSongUrl
+  getSongUrl,
+  getSongsLength
 };
