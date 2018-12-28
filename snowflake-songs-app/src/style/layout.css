@@ -5,11 +5,13 @@
 }
 
 main {
-  flex: 1 ;
+  flex: 1;
+  min-width: 480px;
+  width: 100%;
 }
 
 .wrapper-width, main {
-  max-width: 960px;
+  max-width: 1024px;
   margin: 0 auto;
 }
 

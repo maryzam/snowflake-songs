@@ -1,7 +1,10 @@
+.single-song {
+	width: 100%;
+}
+
 .single-song .snowflake {
 	display: flex;
 	flex-direction: row;
-	width: 100%;
 }
 
 .single-song .navigation-button {
@@ -10,3 +13,8 @@
   padding: 10px;
 }
 
+.single-song .grow {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+}

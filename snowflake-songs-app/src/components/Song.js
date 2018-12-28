@@ -19,7 +19,7 @@ const Song = ({ match }) => {
 
         { (id === 0) ? null : <NavigationButton type={ BUTTON_TYPES.PREV } songId={ id } /> }
 
-        <div>
+        <div className="grow">
           <Snowflake 
               song={ song }
               size={ 500 } 
