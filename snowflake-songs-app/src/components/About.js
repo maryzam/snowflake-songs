@@ -4,7 +4,7 @@ import { AnnotationBracket, AnnotationCalloutElbow, AnnotationCalloutCircle } fr
 import Provider from "../utils/dataProvider";
 import Build from "../utils/snowflakesBuild";
 
-import Snowflake from './Snowflake';
+import Snowflake from './Snowflake/Snowflake';
 import Header from "./Header/Header";
 import Footer from "./Footer";
 
@@ -92,8 +92,7 @@ const About = () => {
       
       <main className="about">
 
-
-        <h2> Legend </h2>
+        <h2> Legend & Explanation </h2>
 
         <p> Each snowflake is built from song attributes. Each one have six arms, which are the same one repeated and rotated for 6 angles.</p>
         
@@ -218,7 +217,7 @@ const About = () => {
         <p> Starting from the topic of Christams songs, we spend some time searching for data and nice stories. One great inspiration was the <a href="https://insights.spotify.com/us/">Spotify Insights blog</a>. And finally a great New Year's playlist won the deal ! </p>
 
         <p> We purposefully choose not to use lyrics. After some thoughts, we decided to use the Spotify API to easily retrieve songs data. Spotify API offer a quite detailed song data for each song track : 
-        <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/">audio features</a><i> (global song attributes)</i>
+        <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/">audio features</a> <i>(global song attributes)</i>
           and  <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-analysis/">audio analysis</a> <i> (detail song attribute by sections and even smaller segements)</i>.
         We used python with Jupyter Notebook and <a href="https://spotipy.readthedocs.io/en/latest/">Spotipy library</a> to easily retrieve data given a playlist or a list of song with their tracks ID.</p>
 
