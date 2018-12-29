@@ -1,16 +1,67 @@
 import React from 'react';
+import { AnnotationBracket, AnnotationCalloutElbow } from 'react-annotation';
+
 import Provider from "../utils/dataProvider";
+import Build from "../utils/snowflakesBuild";
 
 import Snowflake from './Snowflake';
 import Header from "./Header/Header";
 import Footer from "./Footer";
 
+const setUpArmLegend = () => {
+  
+}
+
 const About = () => {
   
   const sizeSnowflakes = 300;
   const songExample = Provider.getSong(1);
-  console.log(songExample);
+  const sectionExample = songExample.sections[0];
   
+  const armScales = Build.updateScales(sizeSnowflakes*4, Build.prepareScales());
+  const svgMargin = 30;
+  const annotColor = "grey";
+  
+  const buildArmAnnotations = () => {
+
+    const baseAnnot = {
+      yPadding: 20,
+      dy: 100,
+      dx: 50
+    };
+  
+    const armAnnotations = [
+      { x: svgMargin, y: svgMargin + baseAnnot.yPadding, dy: baseAnnot.dy, dx: baseAnnot.dx, 
+        note: { title:"Groups", label:"Sections are grouped by order to enable a nice overlap"}
+      }
+    ];
+    
+    //get first section of each group
+    const groupsFirstSection = songExample.sections.filter( (section) => {
+      return section.group.order == 0;
+    });
+  
+    //add empty arrow for each group
+    let currentPos = 0;
+    groupsFirstSection.forEach( (section,i) => {
+      
+      if (i != 0) {
+        currentPos += armScales.duration(section.duration);
+        
+        armAnnotations.push(
+          { x: svgMargin + currentPos, y: svgMargin + baseAnnot.yPadding, dy: baseAnnot.dy, dx: baseAnnot.dx - currentPos,
+            note: { title:"", label:""}
+          }
+        );
+
+      }
+    });
+    console.log(armAnnotations);
+    
+    return armAnnotations;
+  };
+  
+  const armAnnotations = buildArmAnnotations();
   
   return (
     <div>
@@ -24,14 +75,70 @@ const About = () => {
 
         <p> Each snowflake is built from song attributes. Each one have six arms, which are the same one repeated and rotated for 6 angles.</p>
         
-        <Snowflake
-          song={ songExample }
-          size={ sizeSnowflakes }
-          maximize={ true }
-        />
+        <div className="svgHorizCentered">
+          <Snowflake
+            song={ songExample }
+            size={ sizeSnowflakes }
+            maximize={ true }
+          />
+          
+          <svg width={sizeSnowflakes} height={sizeSnowflakes}>
+            <g transform={ `translate(${ svgMargin }, ${ svgMargin }) rotate(${270})`} >
+              {Build.renderSongPattern(songExample, armScales) }
+            </g>
+            
+            {
+              armAnnotations.map((annot,i) => {
+                return (
+                  <AnnotationCalloutElbow
+                    key={i}
+                    x={annot.x}
+                    y={annot.y}
+                    dy={annot.dy}
+                    dx={annot.dx}
+                    color={annotColor}
+                    editMode={true}
+                    note={{
+                      "title":annot.note.title,
+                      "label":annot.note.label,
+                      "wrap":170,
+                      "lineType":"horizontal"}}
+                    connector={{"type":"line","end":"arrow"}} />
+                )
+              })
+            }
+            
+            
+
+          </svg>
+        </div>
         
         <p> Snowflakes arms are built from  the song's list of sections. Those are parts of the song that have different attributes as well as duration, tempo, key and loudness. </p>
         <p> Every section result in an item giving its specific properties : </p>
+        
+        <div className="svgHorizCentered">
+
+          <svg width={sizeSnowflakes} height={sizeSnowflakes}>
+            <g transform={ `translate(${ svgMargin }, ${ svgMargin })`} >
+              <g id={`pattern_${ songExample.id }`} className="snowflake-section">
+        				{
+        				  songExample.sections.map((section,i) => {
+
+        				    const element = (
+        							<path 
+        								key={ section.start }
+        								d={ Build.buildItem(section, armScales) }
+        								transform={ `translate(${ i * 40 }, ${ section.group.id * 100 })` }
+        								/>
+        						);
+        						
+        						return element;
+        				  })
+        				}
+        			</g>
+            </g>
+          </svg>
+        </div>
 
         <p> Items and others experiments can be found in the draft folder on github. </p>
 

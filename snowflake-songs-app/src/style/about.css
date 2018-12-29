@@ -30,3 +30,8 @@
   list-style-type: upper-roman;
   margin-left: 50px;
 }
+
+.svgHorizCentered svg {
+  display: block;
+  margin: auto;
+}
