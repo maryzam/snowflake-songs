@@ -8,7 +8,7 @@ import SnowflakeCard from "./SnowflakeCard";
 const AllSongs = () => {
     const data = Provider.getAllSongs();
     return (
-      <article className="all-songs">
+      <article className="all-songs background">
         <Header />
         <main className="songs-container">
             {
