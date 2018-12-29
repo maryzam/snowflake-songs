@@ -19,8 +19,9 @@
 .snowflake {}
 
 .snowflake-section path {
-	stroke-width: 1px;
-	fill-opacity: 0.5;
+	stroke: #fff;
+	stroke-width: 0.5px;
+	fill-opacity: 0.3;
 	fill: white;
 	mix-blend-mode: luminosity;
 }
