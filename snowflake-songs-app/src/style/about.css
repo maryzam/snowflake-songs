@@ -17,12 +17,16 @@
 }
 
 .about  p, h2, li, br {
-  line-height: 1.3;
+  line-height: 1.5;
   margin-top: 15px;
 }
 
-.about p, li {
-  font-size: 1.2em;
+.about p{
+  font-size: 1.4em;
+}
+
+.about li {
+  font-size: 1.1em;
 }
 
 .about ol {
@@ -38,4 +42,14 @@
 
 .annotation-note-label {
   font-size: 0.8em;
+}
+
+.annotation-note-title {
+  fill: lightgrey;
+}
+
+.about a {
+	text-decoration: underline;
+	font-weight: bold;
+	color: lightgrey;
 }
