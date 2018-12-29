@@ -25,7 +25,7 @@ const getIcon = (type) => {
 const NavigationButton = ( { songId, type } ) => (
   <div className="navigation-button">
     <Link to={ getTargetLink(songId, type) }>
-      <FontAwesomeIcon icon={ getIcon(type) } size="lg" color="grey"/>
+      <FontAwesomeIcon icon={ getIcon(type) } size="2x" color="white"/>
     </Link>
   </div>
 );

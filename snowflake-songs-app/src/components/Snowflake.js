@@ -44,16 +44,11 @@ const prepareScales = () => {
 	const maxDuration = d3.max(sections, d => d.group.order == 0 ? d.duration : 0);
 	const scaleDuration = d3.scaleLinear().domain([0, maxDuration]);
 
-	const scaleGroupColor = d3.scaleOrdinal()
-								.domain([0, 1, 2, 3, 4])
-								.range(["#216594", "#913371", "#DE7F5F"]);
-
 	return {
 		loudness: scaleLoudness,
 		tempo: scaleTempo,
 		key: scaleKey,
-		duration: scaleDuration,
-		groupColor: scaleGroupColor
+		duration: scaleDuration
 	};
 };
 
@@ -96,9 +91,7 @@ class Snowflake extends React.PureComponent {
 							<path 
 								key={ section.start }
 								d={ buildItem(section, this.scales) }
-								transform={ `translate(0, ${ currentPos })` }
-								/*stroke= { this.scales.groupColor(section.group.order) }*/
-								/>
+								transform={ `translate(0, ${ currentPos })` } />
 						);
 
 						if (currentGroup != section.group.id) {
@@ -141,7 +134,7 @@ class Snowflake extends React.PureComponent {
 			}
 		});
 		rayHeight = rayHeight + maxGroupHeight;
-		return (size / 2.5 / rayHeight);
+		return (size / 2 / rayHeight);
 	}
 }
 

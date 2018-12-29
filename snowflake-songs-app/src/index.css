@@ -12,7 +12,7 @@ body {
 	color: #fff;
 }
 
-.background {
+.colorful-background {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	position: fixed;
@@ -22,6 +22,9 @@ body {
 	height: 100vh;
 	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
 	background-size: 400% 400%;
+}
+
+.colorful-background.dynamic {
 	animation: Gradient 15s ease infinite;
 }
 

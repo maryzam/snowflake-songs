@@ -8,7 +8,7 @@ import SnowflakeCard from "./SnowflakeCard";
 const AllSongs = () => {
     const data = Provider.getAllSongs();
     return (
-      <article className="all-songs background">
+      <article className="all-songs colorful-background dynamic">
         <Header />
         <main className="songs-container">
             {
