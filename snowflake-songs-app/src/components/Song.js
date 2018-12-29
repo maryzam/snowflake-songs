@@ -28,9 +28,11 @@ const Song = ({ match }) => {
           { (id === 0) ? null : <NavigationButton type={ BUTTON_TYPES.PREV } songId={ id } /> }
           <div className="grow">
             <Snowflake 
+                key={ song.id }
                 song={ song }
                 size={ 500 } 
-                maximize={ true }/>
+                maximize={ true }
+                animated={ true } />
           </div>
           { (id === lastSong) ? null : <NavigationButton type={ BUTTON_TYPES.NEXT } songId={ id } /> }
         </div>
