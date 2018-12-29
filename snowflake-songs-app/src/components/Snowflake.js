@@ -97,7 +97,7 @@ class Snowflake extends React.PureComponent {
 								key={ section.start }
 								d={ buildItem(section, this.scales) }
 								transform={ `translate(0, ${ currentPos })` }
-								fill= { this.scales.groupColor(section.group.order) }
+								/*stroke= { this.scales.groupColor(section.group.order) }*/
 								/>
 						);
 
