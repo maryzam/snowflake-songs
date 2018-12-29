@@ -17,6 +17,9 @@ const About = () => {
   const sizeSnowflakes = 300;
   const heightItem = sizeSnowflakes*1.3;
   const songExample = Provider.getSong(1);
+  const sectionsNumber = songExample.sections.length ;
+  const itemsByRow = 4;
+  const itemsSpace = sizeSnowflakes / itemsByRow ;
   const sectionExample = songExample.sections[0];
   
   const armScales = Build.updateScales(sizeSnowflakes*4, Build.prepareScales());
@@ -95,11 +98,18 @@ const About = () => {
         <p> Each snowflake is built from song attributes. Each one have six arms, which are the same one repeated and rotated for 6 angles.</p>
         
         <div className="svgHorizCentered">
+        
           <Snowflake
             song={ songExample }
             size={ sizeSnowflakes }
             maximize={ true }
           />
+          
+          <svg width={sizeSnowflakes} height={sizeSnowflakes/4}>
+            <g transform={ `translate(${ svgMargin }, ${ svgMargin }) rotate(${270})`} >
+              {Build.renderSongPattern(songExample, armScales) }
+            </g>
+          </svg>
 
         <p> Snowflakes arms are built from  the song's list of sections. Those are parts of the song that have different attributes as well as duration, tempo, key and loudness. </p>
          <div className="svgHorizCentered">
@@ -114,7 +124,7 @@ const About = () => {
         							<path 
         								key={ section.start }
         								d={ Build.buildItem(section, itemsListScales) }
-        								transform={ `translate(${ i * 30 }, ${ section.group.id * 60 })` }
+        								transform={ `translate(${ i % itemsByRow * itemsSpace }, ${ Math.floor(i / itemsByRow) * itemsSpace })` }
         								/>
         						);
         						
