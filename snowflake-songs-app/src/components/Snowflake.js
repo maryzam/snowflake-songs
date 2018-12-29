@@ -94,7 +94,7 @@ class Snowflake extends React.PureComponent {
 								transform={ `translate(0, ${ currentPos })` } />
 						);
 
-						if (currentGroup != section.group.id) {
+						if (currentGroup !== section.group.id) {
 							currentGroup = section.group.id;
 							currentPos = currentPos + this.scales.duration(section.duration) + 2;
 						}
@@ -120,21 +120,23 @@ class Snowflake extends React.PureComponent {
 	}
 
 	getScaleCoeff(song, size) {
-		let rayHeight = 0;
+		let groupHeight = 0;
+		let nextGroupHeight = 0;
+		let maxHeight = 0;
 		let currentGroup = 0;
-		let maxGroupHeight = 0;
+		let totalGroups = 0;
 		song.sections.forEach((section) => {
 			let currentSectionHeight = this.scales.duration(section.duration);
-			if (currentGroup != section.group.id) {
-				currentGroup = section.group.id;
-				maxGroupHeight = currentSectionHeight;
-				rayHeight = rayHeight + maxGroupHeight + 2;
-			} else {
-				maxGroupHeight = Math.max(maxGroupHeight, currentSectionHeight);
-			}
+			if (currentGroup !== section.group.id) {
+				currentGroup = section.group.id
+				groupHeight = groupHeight + currentSectionHeight;
+				totalGroups++;
+			} 
+			maxHeight = Math.max(maxHeight, (groupHeight + currentSectionHeight));
 		});
-		rayHeight = rayHeight + maxGroupHeight;
-		return (size / 2 / rayHeight);
+		maxHeight = maxHeight + totalGroups * 2;
+		console.log("getScaleCoeff", currentGroup, groupHeight, maxHeight);
+		return (size / 2 / maxHeight);
 	}
 }
 
