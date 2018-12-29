@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Provider from "../utils/dataProvider";
 
+import Header from "./Header/Header";
+import Footer from "./Footer";
 import Snowflake from "./Snowflake";
 import TrackFrame from "./TrackFrame";
 
@@ -13,29 +15,26 @@ const Song = ({ match }) => {
   const lastSong = Provider.getSongsCount() - 1;
 
   return (
-    <div className="single-song">
-
-      <div className="content">
-
-        { (id === 0) ? null : <NavigationButton type={ BUTTON_TYPES.PREV } songId={ id } /> }
-
-        <div className="grow">
-          <Snowflake 
-              song={ song }
-              size={ 500 } 
-              maximize={ true }/>
+    <article className="single-song">
+      <Header title={ song.name } singer={ song.artist } createdByBlock={ false } />
+      <main>
+        <div className="content">
+          { (id === 0) ? null : <NavigationButton type={ BUTTON_TYPES.PREV } songId={ id } /> }
+          <div className="grow">
+            <Snowflake 
+                song={ song }
+                size={ 500 } 
+                maximize={ true }/>
+          </div>
+          { (id === lastSong) ? null : <NavigationButton type={ BUTTON_TYPES.NEXT } songId={ id } /> }
         </div>
-
-        { (id === lastSong) ? null : <NavigationButton type={ BUTTON_TYPES.NEXT } songId={ id } /> }
-
-      </div>
-      
-      <TrackFrame 
-          song={ song }
-          width={ 500 }
-          height={ 80 } />
-
-    </div>
+        <TrackFrame 
+            song={ song }
+            width={ 500 }
+            height={ 80 } />
+      </main>
+      <Footer createdByBlock={ true } />
+    </article>
   );
 
 }
