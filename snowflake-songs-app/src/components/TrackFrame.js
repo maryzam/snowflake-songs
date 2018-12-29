@@ -9,6 +9,7 @@ const TrackFrame = ({ song, width, height }) => {
   	<div>
 	    <iframe 
 	        id={`frame_${song.id}`}
+	        title={ song.name }
 	        src={ trackUrl } 
 	        width={ width } height={ height } 
 	        frameBorder="0" 

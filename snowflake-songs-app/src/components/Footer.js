@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Footer = ({ createdByBlock = false }) => (
     <footer>
       	<p>To learn about Data Analysis & Metodology read <Link to="/About">About</Link></p>
-        <p>Source code & Full Data set availabe on <a href="http://github.com/maryzam/snowflake-songs/" target="_blank">GitHub</a></p>
+        <p>Source code & Full Data set availabe on <a href="http://github.com/maryzam/snowflake-songs/" target="_blank"  rel="noopener noreferrer">GitHub</a></p>
         { 
         	createdByBlock ?
         	(

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Snowflake from './Snowflake';
+import Snowflake from './Snowflake/Snowflake';
 
 const SnowflakeCard = ({ song, size }) => (
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Provider from "../utils/dataProvider";
 
 import Header from "./Header/Header";

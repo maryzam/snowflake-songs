@@ -1,7 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-import Provider from "../utils/dataProvider";
+import Provider from "../../utils/dataProvider";
 
 const rays = [0, 60, 120, 180, 240, 300];
 
@@ -41,7 +41,7 @@ const prepareScales = () => {
 							.range([0, 1])
 							.padding(1);
 
-	const maxDuration = d3.max(sections, d => d.group.order == 0 ? d.duration : 0);
+	const maxDuration = d3.max(sections, d => d.group.order === 0 ? d.duration : 0);
 	const scaleDuration = d3.scaleLinear().domain([0, maxDuration]);
 
 	return {
@@ -58,6 +58,7 @@ class Snowflake extends React.PureComponent {
 
 	render() {
 		const { song, size, maximize } = this.props;
+		console.log( song.sections[1]);
 		this.updateScales(size, song, maximize);
 		return (
 			<svg className="snowflake"
@@ -121,7 +122,6 @@ class Snowflake extends React.PureComponent {
 
 	getScaleCoeff(song, size) {
 		let groupHeight = 0;
-		let nextGroupHeight = 0;
 		let maxHeight = 0;
 		let currentGroup = 0;
 		let totalGroups = 0;
@@ -135,7 +135,6 @@ class Snowflake extends React.PureComponent {
 			maxHeight = Math.max(maxHeight, (groupHeight + currentSectionHeight));
 		});
 		maxHeight = maxHeight + totalGroups * 2;
-		console.log("getScaleCoeff", currentGroup, groupHeight, maxHeight);
 		return (size / 2 / maxHeight);
 	}
 }

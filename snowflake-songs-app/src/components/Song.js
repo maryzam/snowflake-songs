@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import * as d3 from 'd3';
 import Provider from "../utils/dataProvider";
 
 import Header from "./Header/Header";
 import Footer from "./Footer";
-import Snowflake from "./Snowflake";
+import Snowflake from "./Snowflake/Snowflake";
 import TrackFrame from "./TrackFrame";
 
 import NavigationButton, { BUTTON_TYPES } from "./Navigation/Button";
