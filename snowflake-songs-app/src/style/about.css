@@ -35,3 +35,7 @@
   display: block;
   margin: auto;
 }
+
+.annotation-note-label {
+  font-size: 0.8em;
+}

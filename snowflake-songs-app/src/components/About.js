@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnnotationBracket, AnnotationCalloutElbow } from 'react-annotation';
+import { AnnotationBracket, AnnotationCalloutElbow, AnnotationCalloutCircle } from 'react-annotation';
 
 import Provider from "../utils/dataProvider";
 import Build from "../utils/snowflakesBuild";
@@ -15,12 +15,17 @@ const setUpArmLegend = () => {
 const About = () => {
   
   const sizeSnowflakes = 300;
+  const heightItem = sizeSnowflakes*1.3;
   const songExample = Provider.getSong(1);
   const sectionExample = songExample.sections[0];
   
   const armScales = Build.updateScales(sizeSnowflakes*4, Build.prepareScales());
+  const itemsListScales = Build.updateScales(sizeSnowflakes*3, Build.prepareScales());
+  const itemScales = Build.updateScales(sizeSnowflakes*10, Build.prepareScales());
+  
   const svgMargin = 30;
   const annotColor = "grey";
+  const annotMargin = 10;
   
   const buildArmAnnotations = () => {
 
@@ -31,7 +36,7 @@ const About = () => {
     };
   
     const armAnnotations = [
-      { x: svgMargin, y: svgMargin + baseAnnot.yPadding, dy: baseAnnot.dy, dx: baseAnnot.dx, 
+      { position : { x: svgMargin, y: svgMargin + baseAnnot.yPadding, dy: baseAnnot.dy, dx: baseAnnot.dx}, 
         note: { title:"Groups", label:"Sections are grouped by order to enable a nice overlap"}
       }
     ];
@@ -49,19 +54,33 @@ const About = () => {
         currentPos += armScales.duration(section.duration);
         
         armAnnotations.push(
-          { x: svgMargin + currentPos, y: svgMargin + baseAnnot.yPadding, dy: baseAnnot.dy, dx: baseAnnot.dx - currentPos,
+          { position : { x: svgMargin + currentPos, y: svgMargin + baseAnnot.yPadding, dy: baseAnnot.dy, dx: baseAnnot.dx - currentPos},
             note: { title:"", label:""}
           }
         );
 
       }
     });
-    console.log(armAnnotations);
     
     return armAnnotations;
   };
-  
+
   const armAnnotations = buildArmAnnotations();
+  
+  const itemAnnotations = [
+    { position : { x: itemScales.loudness(sectionExample.loudness)/2, y: 0, dy: 0, dx: 0}, 
+      subject: { height: itemScales.duration(sectionExample.duration) },
+      note: { title:"Duration", label: "is encoded as height of the item",  wrap: 60 }
+    },
+    { position : { x: - itemScales.loudness(sectionExample.loudness)/2, y: itemScales.duration(sectionExample.duration) + annotMargin, dy: 0, dx: 0}, 
+      subject: { width: itemScales.loudness(sectionExample.loudness) },
+      note: { title:"Loudness", label: "is encoded as width of the item" }
+    },
+    { position : { x: - itemScales.loudness(sectionExample.loudness)/2 - annotMargin, y: 0, dy: 0, dx: 0}, 
+      subject: { height: itemScales.key(sectionExample.key) * itemScales.duration(sectionExample.duration), depth: -10 },
+      note: { title:"Key", label: "is encoded as the height of the mid point", wrap: 60 }
+    }
+  ];
   
   return (
     <div>
@@ -81,8 +100,81 @@ const About = () => {
             size={ sizeSnowflakes }
             maximize={ true }
           />
-          
+
+        <p> Snowflakes arms are built from  the song's list of sections. Those are parts of the song that have different attributes as well as duration, tempo, key and loudness. </p>
+         <div className="svgHorizCentered">
           <svg width={sizeSnowflakes} height={sizeSnowflakes}>
+            <g transform={ `translate(${ svgMargin }, ${ svgMargin })`} >
+              <g id={`pattern_${ songExample.id }`} className="snowflake-section">
+        				{
+        				  
+        				  songExample.sections.map((section,i) => {
+
+        				    const element = (
+        							<path 
+        								key={ section.start }
+        								d={ Build.buildItem(section, itemsListScales) }
+        								transform={ `translate(${ i * 30 }, ${ section.group.id * 60 })` }
+        								/>
+        						);
+        						
+        						return element;
+        				  })
+        				}
+        			</g>
+            </g>
+          </svg>
+        </div>
+        
+        <p> Every section result in an item giving its specific properties : </p>
+        <div className="svgHorizCentered">
+          <svg width={sizeSnowflakes} height={heightItem}>
+            <g transform={ `translate(${ sizeSnowflakes/2 }, ${ heightItem/2 - itemScales.duration(sectionExample.duration)/2 })`} >
+              <g id={`pattern_${ songExample.id }`} className="snowflake-section">
+    							<path 
+    								key={ sectionExample.start }
+    								d={ Build.buildItem(sectionExample, itemScales) }
+    								/>
+        			</g>
+        			
+        			{
+                itemAnnotations.map((annot,i) => {
+                  return (
+              			<AnnotationBracket
+              			  key={i}
+                      {...annot.position}
+                      color={annotColor}
+                      note={{
+                        ...annot.note 
+                      }}
+                      subject={{
+                        ...annot.subject,
+                        "type":"curly"
+                      }}
+                    />
+                  )
+                })
+        			}
+        			
+        			<AnnotationCalloutCircle
+                x={annotMargin}
+                y={annotMargin}
+                dy={-30}
+                dx={30}
+                color={annotColor}
+                editMode={true}
+                note={{"title":"Tempo",
+                  "label":"is encoded as the curviness",
+                  "lineType":"horizontal"}}
+                subject={{"radius":20,"radiusPadding":3}}
+              />
+            
+            </g>
+          </svg>
+        </div>
+       
+        <p> Items are grouped to overlap </p>
+        <svg width={sizeSnowflakes} height={sizeSnowflakes}>
             <g transform={ `translate(${ svgMargin }, ${ svgMargin }) rotate(${270})`} >
               {Build.renderSongPattern(songExample, armScales) }
             </g>
@@ -92,51 +184,17 @@ const About = () => {
                 return (
                   <AnnotationCalloutElbow
                     key={i}
-                    x={annot.x}
-                    y={annot.y}
-                    dy={annot.dy}
-                    dx={annot.dx}
+                    {...annot.position}
                     color={annotColor}
-                    editMode={true}
                     note={{
-                      "title":annot.note.title,
-                      "label":annot.note.label,
-                      "wrap":170,
+                      ...annot.note,
+                      "wrap":150,
                       "lineType":"horizontal"}}
                     connector={{"type":"line","end":"arrow"}} />
                 )
               })
             }
-            
-            
 
-          </svg>
-        </div>
-        
-        <p> Snowflakes arms are built from  the song's list of sections. Those are parts of the song that have different attributes as well as duration, tempo, key and loudness. </p>
-        <p> Every section result in an item giving its specific properties : </p>
-        
-        <div className="svgHorizCentered">
-
-          <svg width={sizeSnowflakes} height={sizeSnowflakes}>
-            <g transform={ `translate(${ svgMargin }, ${ svgMargin })`} >
-              <g id={`pattern_${ songExample.id }`} className="snowflake-section">
-        				{
-        				  songExample.sections.map((section,i) => {
-
-        				    const element = (
-        							<path 
-        								key={ section.start }
-        								d={ Build.buildItem(section, armScales) }
-        								transform={ `translate(${ i * 40 }, ${ section.group.id * 100 })` }
-        								/>
-        						);
-        						
-        						return element;
-        				  })
-        				}
-        			</g>
-            </g>
           </svg>
         </div>
 
