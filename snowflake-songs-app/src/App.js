@@ -11,6 +11,7 @@ import './style/snowflake.css';
 import './style/header.css';
 import './style/footer.css';
 import './style/single-song.css';
+import './style/about.css';
 
 const App = () => (
     <Switch>

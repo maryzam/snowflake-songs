@@ -1,0 +1,55 @@
+.about {
+  text-align: justify;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .about {
+    padding: 20px;
+    width: 80%;
+  }
+}
+
+.about h2 {
+	font-family: 'Kaushan Script', 'Roboto',  "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+	font-size: 2em;
+}
+
+.about  p, h2, li, br {
+  line-height: 1.5;
+  margin-top: 15px;
+}
+
+.about p{
+  font-size: 1.4em;
+}
+
+.about li {
+  font-size: 1.1em;
+}
+
+.about ol {
+  list-style-type: none;
+  list-style-type: upper-roman;
+  margin-left: 50px;
+}
+
+.svgHorizCentered svg {
+  display: block;
+  margin: auto;
+}
+
+.annotation-note-label {
+  font-size: 0.8em;
+}
+
+.annotation-note-title {
+  fill: lightgrey;
+}
+
+.about a {
+	text-decoration: underline;
+	font-weight: bold;
+	color: lightgrey;
+}
