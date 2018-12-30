@@ -17,6 +17,7 @@ const About = () => {
   const sizeSnowflakes = 300;
   const heightItem = sizeSnowflakes*1.3;
   const songExample = Provider.getSong(1);
+  console.log(songExample);
   const sectionsNumber = songExample.sections.length ;
   const itemsByRow = 4;
   const itemsSpace = sizeSnowflakes / itemsByRow ;
@@ -93,25 +94,40 @@ const About = () => {
       <main className="about">
 
         <h2> Legend & Explanation </h2>
-
-        <p> Each snowflake is built from song attributes. Each one have six arms, which are the same one repeated and rotated for 6 angles.</p>
         
-        <div className="svgHorizCentered">
-        
+        <div className="svg-horiz-centered">
           <Snowflake
             song={ songExample }
             size={ sizeSnowflakes }
             maximize={ true }
           />
-          
+        </div>
+        
+        <p> Each snowflake is built from a song audio attributes : some from the overall song and some from song parts. 
+        The background of the song encode its overall <b>Valence</b>, which describes its musical positiveness :</p>
+        
+        <div className="color-legend">
+          <div className="color-legend-text left"> <p> 0 : sound more sad, depressed, angry </p> </div>
+          <div className="color-legend-text right"> <p> 1 : sound more happy, cheerful, euphoric </p> </div>
+        </div>
+        <div className="colorful-rectangle"></div>
+        
+        <br></br>
+
+        <p> Snowflakes have six arms, which are the same one repeated and rotated for 6 angles.</p>
+        
+        <div className="svg-horiz-centered">
           <svg width={sizeSnowflakes} height={sizeSnowflakes/4}>
             <g transform={ `translate(${ svgMargin }, ${ svgMargin }) rotate(${270})`} >
               {Build.renderSongPattern(songExample, armScales) }
             </g>
           </svg>
+        </div>
+        
+        <br></br>
 
-        <p> Snowflakes arms are built from  the song's list of sections. Those are parts of the song that have different attributes as well as duration, tempo, key and loudness. </p>
-         <div className="svgHorizCentered">
+        <p> Snowflakes arms are built from  the song's list of sections. Those are parts of the song that have different attributes as duration, tempo, key and loudness. </p>
+        <div className="svg-horiz-centered">
           <svg width={sizeSnowflakes} height={sizeSnowflakes}>
             <g transform={ `translate(${ svgMargin }, ${ svgMargin })`} >
               <g id={`pattern_${ songExample.id }`} className="snowflake-section">
@@ -135,8 +151,8 @@ const About = () => {
           </svg>
         </div>
         
-        <p> Every section result in an item giving its specific properties : </p>
-        <div className="svgHorizCentered">
+        <p> Every section result in an item giving its specific properties, where scales range are computed from the whole songs list. : </p>
+        <div className="svg-horiz-centered">
           <svg width={sizeSnowflakes} height={heightItem}>
             <g transform={ `translate(${ sizeSnowflakes/2 }, ${ heightItem/2 - itemScales.duration(sectionExample.duration)/2 })`} >
               <g id={`pattern_${ songExample.id }`} className="snowflake-section">
@@ -180,31 +196,37 @@ const About = () => {
             </g>
           </svg>
         </div>
+        
+        <p> In each section, <b>Key</b> represent the overall keu of the section from 0 (C key) to 11 (B key) following the <a href="https://en.wikipedia.org/wiki/Pitch_class"> pitch class notation</a>. 
+        <b>Tempo</b> attribute is encoded as concave for a low tempo and convex for a high one.</p>
+        
+        <br></br>
        
-        <p> Items are grouped to overlap </p>
-        <svg width={sizeSnowflakes} height={sizeSnowflakes}>
-            <g transform={ `translate(${ svgMargin }, ${ svgMargin }) rotate(${270})`} >
-              {Build.renderSongPattern(songExample, armScales) }
-            </g>
-            
-            {
-              armAnnotations.map((annot,i) => {
-                return (
-                  <AnnotationCalloutElbow
-                    key={i}
-                    {...annot.position}
-                    color={annotColor}
-                    note={{
-                      ...annot.note,
-                      "wrap":150,
-                      "lineType":"horizontal"}}
-                    connector={{"type":"line","end":"arrow"}} />
-                )
-              })
-            }
-
-          </svg>
-        </div>
+        <p> Items are grouped to overlap : </p>
+        <div className="svg-horiz-centered">
+          <svg width={sizeSnowflakes} height={sizeSnowflakes}>
+              <g transform={ `translate(${ svgMargin }, ${ svgMargin }) rotate(${270})`} >
+                {Build.renderSongPattern(songExample, armScales) }
+              </g>
+              
+              {
+                armAnnotations.map((annot,i) => {
+                  return (
+                    <AnnotationCalloutElbow
+                      key={i}
+                      {...annot.position}
+                      color={annotColor}
+                      note={{
+                        ...annot.note,
+                        "wrap":150,
+                        "lineType":"horizontal"}}
+                      connector={{"type":"line","end":"arrow"}} />
+                  )
+                })
+              }
+  
+            </svg>
+          </div>
 
         <p> Items and others experiments can be found in the draft folder on github. </p>
 
@@ -217,14 +239,14 @@ const About = () => {
         <p> Starting from the topic of Christams songs, we spend some time searching for data and nice stories. One great inspiration was the <a href="https://insights.spotify.com/us/">Spotify Insights blog</a>. And finally a great New Year's playlist won the deal ! </p>
 
         <p> We purposefully choose not to use lyrics. After some thoughts, we decided to use the Spotify API to easily retrieve songs data. Spotify API offer a quite detailed song data for each song track : 
-        <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/">audio features</a> <i>(global song attributes)</i>
-          and  <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-analysis/">audio analysis</a> <i> (detail song attribute by sections and even smaller segements)</i>.
+        <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/">audio features</a> - global song attributes -
+          and  <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-analysis/">audio analysis</a> - detail song attribute by song's sections and even smaller parts (segments).
         We used python with Jupyter Notebook and <a href="https://spotipy.readthedocs.io/en/latest/">Spotipy library</a> to easily retrieve data given a playlist or a list of song with their tracks ID.</p>
 
        <p> The main steps then were the following : </p>
        <ol>
          <li> Get to know audio features & analysis attributes </li>
-         <li> Select attributes to encode in the visualisation. Our main choices here were to use sections only <i>(segments were really small duration parts of songs)</i> and keep some of the global attributes <i> (X, X and X)</i> </li>
+         <li> Select attributes to encode in the visualisation. Our main choice here was to only use sections as segments were really small duration parts of songs, and use some of the global attributes - mainly Valence. </li>
          <li> Retrive data with Spotify API and Spotipy library, deleted unused attributes and convert the list to JSON. </li>
        </ol>
        
