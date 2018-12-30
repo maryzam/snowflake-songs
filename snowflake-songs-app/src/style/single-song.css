@@ -14,6 +14,8 @@
 .single-song .content {
 	display: flex;
 	flex-direction: row;
+	min-height: calc(100vh - 100px);
+	align-items: center;
 }
 
 .single-song .navigation-button {

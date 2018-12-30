@@ -12,6 +12,7 @@ import './style/header.css';
 import './style/footer.css';
 import './style/single-song.css';
 import './style/about.css';
+import './style/preloader.css';
 
 const App = () => (
     <Switch>

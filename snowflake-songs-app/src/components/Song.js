@@ -13,45 +13,78 @@ const scaleValence = d3.scaleLinear().domain([0, 1]).range([0, 100]);
 
 const videoOptions = { playerVars: { autoplay: 1 } };
 
-const Song = ({ match }) => {
+class Song extends React.PureComponent  {
 
-  const id = parseInt(match.params.id, 10);
-  const song = Provider.getSong(id);
-  const lastSong = Provider.getSongsCount() - 1;
-  const backgroundPosition = Math.floor(scaleValence(song.valence));
+  state = {
+    songId: "",
+    isSongReady: false
+  }
 
-  return (
-    <article 
-      className="single-song colorful-background"
-      style={{ backgroundPosition: `${ backgroundPosition }% ${backgroundPosition}%` }}>
-      <Header title={ song.name } singer={ song.artist } createdByBlock={ false } />
-      <main>
+  static getDerivedStateFromProps(props, state) {
+    const { params } = props.match;
+    const songId = parseInt(params.id, 10);
+    if (songId !== state.songId) {
+      return { 
+        songId: songId,
+        isSongReady: false 
+      }
+    }
+    return null;
+  }
 
-        <div className="content">
-          { (id === 0) ? null : <NavigationButton type={ BUTTON_TYPES.PREV } songId={ id } /> }
-          <div className="grow">
-            <Snowflake 
-                key={ song.id }
-                song={ song }
-                size={ 500 } 
-                maximize={ true }
-                animated={ true } />
-          </div>
-          { (id === lastSong) ? null : <NavigationButton type={ BUTTON_TYPES.NEXT } songId={ id } /> }
-        </div>
+  onSongReady = ({ target }) => {
+     target.playVideo();
+     this.setState({ isSongReady: true });
+  }
 
-        <YouTube 
-          key={ song.youtubeId }
-          className="background-player"
-          videoId={ song.youtubeId }
-          onReady={ (e) => { e.target.playVideo() } }
-        />
+  render() {
+    
+    const { isSongReady, songId } = this.state; 
 
-      </main>
-      <Footer createdByBlock={ true } />
-    </article>
-  );
+    const song = Provider.getSong(songId);
+    const lastSong = Provider.getSongsCount() - 1;
+    const backgroundPosition = Math.floor(scaleValence(song.valence));
 
+    return (
+        <article 
+          className="single-song colorful-background"
+          style={{ backgroundPosition: `${ backgroundPosition }% ${backgroundPosition}%` }}>
+          <Header title={ song.name } singer={ song.artist } createdByBlock={ false } />
+          <main>
+
+            <div className="content">
+              { (songId === 0) ? null : <NavigationButton type={ BUTTON_TYPES.PREV } songId={ songId } /> }
+              <div className="grow">
+                {
+                  isSongReady 
+                  ? (
+                    <Snowflake 
+                        key={ song.id }
+                        song={ song }
+                        size={ 500 } 
+                        maximize={ true }
+                        animated={ true } />
+                  ) : (
+                    <div className="preloader"></div>
+                  )
+                }
+              </div>
+              { (songId === lastSong) ? null : <NavigationButton type={ BUTTON_TYPES.NEXT } songId={ songId } /> }
+            </div>
+
+            <YouTube 
+              key={ song.youtubeId }
+              className="background-player"
+              videoId={ song.youtubeId }
+              onReady={ this.onSongReady } 
+              onStateChange={ this.onPlayerStateChanged } 
+            />
+
+          </main>
+          <Footer createdByBlock={ true } />
+        </article>
+    );    
+  }
 }
 
 export default Song;
