@@ -27,3 +27,12 @@
 	display: flex;
 	justify-content: center;
 }
+
+.single-song .background-player
+{
+	display: block;
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	z-index: -10;
+}

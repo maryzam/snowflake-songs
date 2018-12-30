@@ -97,8 +97,8 @@ class SnowflakeRay extends React.PureComponent {
 											        <animateTransform attributeName="transform"
 													    type="scale"
 														from="0 0" to="1 1" fill="freeze"
-														begin={ `${section.start / 10}s` } 
-													    dur={ `${section.duration / 10}s` }
+														begin={ `${section.start}s` } 
+													    dur={ `${section.duration}s` }
 													    repeatCount={ 1 } additive="sum" />
 													</Fragment>
 								            	) : null
