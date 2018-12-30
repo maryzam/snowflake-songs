@@ -11,5 +11,6 @@ footer p {
 }
 
 footer a {
-	color: #05ABC3;
+	color: white;
+	font-weight: bold;
 }
