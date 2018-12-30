@@ -35,13 +35,14 @@
   margin-left: 50px;
 }
 
-.svgHorizCentered svg {
+.svg-horiz-centered svg {
   display: block;
-  margin: auto;
+  margin: 30px auto;
 }
 
-.annotation-note-label {
+.annotation-note-label, .about .color-legend p {
   font-size: 0.8em;
+  color: lightgrey;
 }
 
 .annotation-note-title {
@@ -51,5 +52,36 @@
 .about a {
 	text-decoration: underline;
 	font-weight: bold;
-	color: lightgrey;
+	color: #4d4d4d;
+}
+
+.about a:hover {
+	color: grey;
+}
+
+.about .colorful-rectangle {
+	top: 0;
+	left: 0;
+	width: 300px;
+	height: 25px;
+	background: linear-gradient(-90deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+	margin: 10px auto;
+}
+
+.about .color-legend {
+  width: 300px;
+  margin: 10px auto;
+}
+
+.about .color-legend-text {
+  width: 150px;
+  display: inline-block;
+}
+
+.about .color-legend p {
+  text-align: left;
+}
+
+.about .right p {
+  text-align: right;
 }
