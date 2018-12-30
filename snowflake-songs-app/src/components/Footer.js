@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Footer = ({ createdByBlock = false }) => (
     <footer>
-      	<p>To learn about Data Analysis & Metodology read <Link to="/About">About</Link></p>
-        <p>Source code & Full Data set availabe on <a href="http://github.com/maryzam/snowflake-songs/" target="_blank"  rel="noopener noreferrer">GitHub</a></p>
+      	<p>To learn about snowflake build process, legend, and metodology read <Link to="/About">About</Link></p>
+        <p>Source code & full data set availabe on <a href="http://github.com/maryzam/snowflake-songs/" target="_blank"  rel="noopener noreferrer">GitHub</a></p>
         { 
         	createdByBlock ?
         	(
