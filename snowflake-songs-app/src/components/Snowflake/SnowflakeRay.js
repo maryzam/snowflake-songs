@@ -80,8 +80,8 @@ class SnowflakeRay extends React.PureComponent {
 										<Fragment>
 											<animate attributeName="opacity" 
 								               from="0.1" to="1" fill="freeze"
-								               begin={ `${section.start / 10}s` } 
-								               dur={ `${section.duration / 10}s` }
+								               begin={ `${section.start}s` } 
+								               dur={ `${section.duration}s` }
 								               repeatCount={ 1 } />
 								            {
 								            	shouldScale ?
@@ -93,12 +93,12 @@ class SnowflakeRay extends React.PureComponent {
 														to={ `0, ${ currentPos }` }
 														begin={ `${section.start}s` } 
 													    dur={ `${section.duration}s` }
-													    repeatCount={ 0 } />
+													    repeatCount={ 1 } />
 											        <animateTransform attributeName="transform"
 													    type="scale"
 														from="0 0" to="1 1" fill="freeze"
-														begin={ `${section.start}s` } 
-													    dur={ `${section.duration}s` }
+														begin={ `${section.start / 10}s` } 
+													    dur={ `${section.duration / 10}s` }
 													    repeatCount={ 1 } additive="sum" />
 													</Fragment>
 								            	) : null
