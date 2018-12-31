@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faLinkedin, faPinterest } from '@fortawesome/free-brands-svg-icons';
 
 const shareText = "The best New Year songs as Snowflakes! ❄❄❄";
-const shareImage = "./img/snowflakes-home.PNG";
+const shareImage = "https://raw.githubusercontent.com/maryzam/snowflake-songs/gh-pages/snowflakes.png";
 
 const ShareLinks = () => {
 	const currentUrl = window.location.hostname;
