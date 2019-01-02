@@ -3,7 +3,7 @@ import { Switch, Route} from "react-router-dom";
 
 import AllSongs from "./components/AllSongs";
 import Song from "./components/Song";
-import About from "./components/About";
+import About from "./components/About/About";
 
 import './style/social-share.css';
 import './style/layout.css';
