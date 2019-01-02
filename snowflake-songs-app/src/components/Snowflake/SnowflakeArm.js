@@ -50,7 +50,7 @@ const prepareScales = () => {
 	};
 };
 
-class SnowflakeRay extends React.PureComponent { 
+class SnowflakeArm extends React.PureComponent { 
 
 	scales = prepareScales();
 
@@ -152,10 +152,10 @@ class SnowflakeRay extends React.PureComponent {
 	}
 }
 
-SnowflakeRay.defaultProps = {
+SnowflakeArm.defaultProps = {
 	size: 300,
 	maximize: false,
 	animated: false
 };
 
-export default SnowflakeRay;
+export default SnowflakeArm;
