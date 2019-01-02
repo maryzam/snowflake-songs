@@ -14,7 +14,7 @@ import SnowflakeItemsOverall from './Legend/SnowflakeItemsOverall';
 import SingleItemLegend from './Legend/SingleItemLegend';
 import ItemsGroupingLegend from './Legend/ItemsGroupingLegend';
 
-import Metodology from './Metodology';
+import Methodology from './Methodology';
 
 const sizeSnowflakes = 300;
 const songExample = Provider.getSong(1);
@@ -64,7 +64,7 @@ const About = () => (
 
         </article>
 
-        <Metodology />
+        <Methodology />
          
       </main>
       
