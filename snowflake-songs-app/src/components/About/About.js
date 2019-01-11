@@ -42,9 +42,10 @@ const About = () => (
           <ValenceLegend />
 
           <SnowflakeArmOverall 
-            size={ sizeSnowflakes } 
             song={ songExample } 
-            armScales={ armScales } />
+            width={ sizeSnowflakes } 
+            height={ sizeSnowflakes / 4 }
+          />
 
           <SnowflakeItemsOverall 
             size={ sizeSnowflakes } 
@@ -58,7 +59,9 @@ const About = () => (
           <ItemsGroupingLegend 
             size={ sizeSnowflakes } 
             song={ songExample } 
-            armScales={ armScales } />
+            armScales={ armScales } 
+            width={ sizeSnowflakes } 
+            height={ sizeSnowflakes * 0.8 } />
          
           <p> Items and others experiments can be found in the draft folder on github. </p>
 

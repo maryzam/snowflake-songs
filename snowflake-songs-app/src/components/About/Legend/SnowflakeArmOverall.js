@@ -1,25 +1,22 @@
 import React from 'react';
-import Build from "../../../utils/snowflakesBuild";
 
-const svgMargin = 30;
+import SnowflakeArm from "../../Snowflake/SnowflakeArm";
 
-const SnowflakeArmOverall = ({ size, song, armScales }) => (
+const SnowflakeArmOverall = ({ song, width, height }) => (
 	<section>
-	<p> Snowflakes have six arms, which are the same one repeated and rotated for 6 angles.</p>
-        
+  	<p> Snowflakes have six arms, which are the same one repeated and rotated for 6 angles.</p>
     <div className="svg-horiz-centered">
-    	<svg 
-    		width={ size } 
-    		height={ size/4 }>
-            <g transform={ `translate(${ svgMargin }, ${ svgMargin })rotate(${270})`} >
-              {
-              	Build.renderSongPattern(song, armScales) 
-              }
-            </g>
-        </svg>
+     	<svg width={ width }  height={ height }>
+        <g transform={ `translate(0, ${ height / 2})rotate(270)` }>
+          <SnowflakeArm 
+              song={ song }
+              size={ width * 2 }
+              maximize={ true } 
+              animated={ false } />
+          </g>
+      </svg>
     </div>
-
-    </section>
+  </section>
 );
 
 export default SnowflakeArmOverall;

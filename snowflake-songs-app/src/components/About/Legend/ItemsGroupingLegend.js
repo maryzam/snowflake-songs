@@ -1,7 +1,7 @@
 import React from 'react';
 import { AnnotationBracket, AnnotationCalloutElbow, AnnotationCalloutCircle } from 'react-annotation';
 
-import Build from "../../../utils/snowflakesBuild";
+import SnowflakeArm from "../../Snowflake/SnowflakeArm";
 
 const annotColor = "grey";
 const annotMargin = 10;
@@ -17,8 +17,16 @@ const buildArmAnnotations = (song, armScales) => {
   
     const armAnnotations = [
       { 
-      	position : { x: svgMargin, y: svgMargin + baseAnnot.yPadding, dy: baseAnnot.dy, dx: baseAnnot.dx}, 
-        note: { title:"Groups", label:"Sections are grouped by order to enable a nice overlap"}
+      	position : { 
+          x: svgMargin, 
+          y: svgMargin + baseAnnot.yPadding, 
+          dy: baseAnnot.dy, 
+          dx: baseAnnot.dx
+        }, 
+        note: { 
+          title:"Groups", 
+          label:"Sections are grouped by order to enable a nice overlap"
+        }
       }
     ];
     
@@ -45,33 +53,82 @@ const buildArmAnnotations = (song, armScales) => {
     return armAnnotations;
 };
 
-const ItemsGroupingLegend = ({ size, song, armScales }) => {
-  	
-  	const armAnnotations = buildArmAnnotations(song, armScales);
+const prepareAnotations = (song, armScales, offset) => {
+    const baseAnnot = {
+      yPadding: 20,
+      dy: 100,
+      dx: 50
+    };
+
+    const armAnnotations = [
+      { 
+        position : { 
+          x: 0,
+          y: offset + baseAnnot.yPadding, 
+          dy: baseAnnot.dy, 
+          dx: baseAnnot.dx
+        }, 
+        note: { 
+          title:"Groups", 
+          label:"Sections are grouped by order to enable a nice overlap"
+        }
+      }
+    ];
+
+    let currentPos = 0;
+    song.sections.forEach((section) => {
+        if (section.group.order !== 0) { return; }
+        armAnnotations.push(
+        { 
+            position : { 
+              x: currentPos, 
+              y:  offset + baseAnnot.yPadding, 
+              dy: baseAnnot.dy, 
+              dx: baseAnnot.dx - currentPos
+            },
+            note: { title:"", label:"" }
+        });
+        currentPos += armScales.duration(section.duration);
+    });
+
+    return armAnnotations;
+}
+
+const ItemGroupsAnnotation = ({song, armScales, offset }) => {
+
+  const annotations = prepareAnotations(song, armScales, offset);
+
+  return annotations.map((annotation, id) => (
+    <AnnotationCalloutElbow key={id}
+      {...annotation.position}
+      color={ annotColor }
+      note={{ ...annotation.note,
+        "wrap":150,
+        "lineType":"horizontal"}}
+         connector={{"type":"line","end":"arrow"}} 
+    />)
+  );
+}
+
+const ItemsGroupingLegend = ({ size, width, height, song, armScales }) => {
 
 	return (
 		<section>
 			<p> Items are grouped to overlap : </p>
 		    <div className="svg-horiz-centered">
-		        <svg width={size} height={size}>
-		            <g transform={ `translate(${ svgMargin }, ${ svgMargin }) rotate(${270})`} >
-		                { Build.renderSongPattern(song, armScales) }
+		        <svg width={ width } height={ height }>
+		            <g transform={ `translate(0, ${ height / 4 }) rotate(${270})`} >
+		              <SnowflakeArm 
+                    song={ song }
+                    size={ width * 2 }
+                    maximize={ true } 
+                    animated={ false } />
 		            </g>
-		            {
-		                armAnnotations.map((annot,i) => {
-		                  return (
-		                    <AnnotationCalloutElbow
-		                      key={i}
-		                      {...annot.position}
-		                      color={annotColor}
-		                      note={{
-		                        ...annot.note,
-		                        "wrap":150,
-		                        "lineType":"horizontal"}}
-		                      connector={{"type":"line","end":"arrow"}} />
-		                  )
-		                })
-		              }
+		            <ItemGroupsAnnotation 
+                  song={ song }
+                  armScales={ armScales }
+                  offset= { height / 4}
+                />
 		        </svg>
 		    </div>
 		</section>

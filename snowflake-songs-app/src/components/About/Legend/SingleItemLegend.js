@@ -40,24 +40,23 @@ const SingleItemLegend = ({ size, song }) => {
 		    				d={ Build.buildItem(sectionExample, itemScales) }
 		    			/>
 	        		</g>
-	        			
-	        	{
-	                itemAnnotations.map((annot,i) => {
-	                  return (
-	              		<AnnotationBracket
-	              			  key={i}
-	                      {...annot.position}
-	                      color={annotColor}
-	                      note={{ ...annot.note }}
-	                      subject={{
-	                        ...annot.subject,
-	                        "type":"curly"
-	                      }}
-	                    />
-	                  )
-	                })
-	        	}
-	        			
+	        		{
+		                itemAnnotations.map((annot,i) => {
+		                  return (
+		              		<AnnotationBracket
+		              			  key={i}
+		                      {...annot.position}
+		                      color={annotColor}
+		                      note={{ ...annot.note }}
+		                      subject={{
+		                        ...annot.subject,
+		                        "type":"curly"
+		                      }}
+		                    />
+		                  )
+		                })
+		        	}
+		        			
 	        	<AnnotationCalloutCircle
 	                x={annotMargin}
 	                y={annotMargin}
