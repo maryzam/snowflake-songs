@@ -1,8 +1,8 @@
 import React from 'react';
 
-import SnowflakeRay from './SnowflakeRay';
+import SnowflakeArm from './SnowflakeArm';
 
-const rays = [0, 60, 120, 180, 240, 300];
+const arms = [0, 60, 120, 180, 240, 300];
 
 class Snowflake extends React.PureComponent { 
 
@@ -13,15 +13,15 @@ class Snowflake extends React.PureComponent {
 				className="snowflake"
 				width={size} height={size} >
 				<def>
-					<SnowflakeRay 
+					<SnowflakeArm
 						song={ song }
 						size={ size }
 						maximize={ maximize } 
-						animated={animated} />
+						animated={ animated } />
 				</def>
 				<g transform={ `translate(${size / 2}, ${ size / 2})` }>
 					{
-						rays.map((angle) => (
+						arms.map((angle) => (
 							<g key={ angle }
 							 	className="line"
 							 	transform={`rotate(${angle})`}>
