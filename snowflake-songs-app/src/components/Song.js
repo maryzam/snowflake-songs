@@ -78,6 +78,7 @@ class Song extends React.PureComponent  {
               videoId={ song.youtubeId }
               onReady={ this.onSongReady } 
               onStateChange={ this.onPlayerStateChanged } 
+              opts={ videoOptions }
             />
 
           </main>

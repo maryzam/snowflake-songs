@@ -1,59 +1,12 @@
 import React from 'react';
-import { AnnotationBracket, AnnotationCalloutElbow, AnnotationCalloutCircle } from 'react-annotation';
+import { AnnotationCalloutElbow } from 'react-annotation';
 
+import { ScalesProvider } from "../../../providers";
 import SnowflakeArm from "../../Snowflake/SnowflakeArm";
 
 const annotColor = "grey";
-const annotMargin = 10;
-const svgMargin = 30;
 
-const buildArmAnnotations = (song, armScales) => {
-
-    const baseAnnot = {
-      yPadding: 20,
-      dy: 100,
-      dx: 50
-    };
-  
-    const armAnnotations = [
-      { 
-      	position : { 
-          x: svgMargin, 
-          y: svgMargin + baseAnnot.yPadding, 
-          dy: baseAnnot.dy, 
-          dx: baseAnnot.dx
-        }, 
-        note: { 
-          title:"Groups", 
-          label:"Sections are grouped by order to enable a nice overlap"
-        }
-      }
-    ];
-    
-    //get first section of each group
-    const groupsFirstSection = song.sections.filter( (section) => {
-      return section.group.order == 0;
-    });
-
-    //add empty arrow for each group
-    let currentPos = 0;
-    groupsFirstSection.forEach( (section,i) => {
-      if (i != 0) {
-        currentPos += armScales.duration(section.duration);
-        armAnnotations.push(
-          { 
-          	position : { x: svgMargin + currentPos, y: svgMargin + baseAnnot.yPadding, dy: baseAnnot.dy, dx: baseAnnot.dx - currentPos},
-            note: { title:"", label:""}
-          }
-        );
-
-      }
-    });
-    
-    return armAnnotations;
-};
-
-const prepareAnotations = (song, armScales, offset) => {
+const prepareAnotations = (song, scales, offset) => {
     const baseAnnot = {
       yPadding: 20,
       dy: 100,
@@ -77,25 +30,29 @@ const prepareAnotations = (song, armScales, offset) => {
 
     let currentPos = 0;
     song.sections.forEach((section) => {
+        console.log(section.group.id, section.group.order);
         if (section.group.order !== 0) { return; }
         armAnnotations.push(
         { 
             position : { 
               x: currentPos, 
-              y:  offset + baseAnnot.yPadding, 
+              y: offset + baseAnnot.yPadding, 
               dy: baseAnnot.dy, 
               dx: baseAnnot.dx - currentPos
             },
             note: { title:"", label:"" }
         });
-        currentPos += armScales.duration(section.duration);
+        currentPos += scales.duration(section.duration);
     });
+
+    console.log(armAnnotations);
 
     return armAnnotations;
 }
 
-const ItemGroupsAnnotation = ({song, armScales, offset }) => {
+const ItemGroupsAnnotation = ({song, offset}) => {
 
+  const armScales = ScalesProvider.getScales();
   const annotations = prepareAnotations(song, armScales, offset);
 
   return annotations.map((annotation, id) => (

@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
-import { DataProvider, ScalesProvider } from "../../providers";
+import { ScalesProvider } from "../../providers";
+
+import * as d3 from 'd3';
 
 const scales = ScalesProvider.getScales();
 
@@ -17,12 +19,15 @@ const buildPath = (section) => {
 			Q ${slopePos} ${midPos * 1.1}0 0 ${itemHeight}`;
 };
 
+const scaleTest = d3.scaleOrdinal().domain([0, 1, 2, 3, 4, 5]).range(["red", "green", "red", "green", "red", "green"]);
+
 const SnowflakeItem = ({ section, animated = false, offset = 0 }) => {
 
 	const shouldScale = animated && (section.group.id > 2 || section.group.order > 0);
 	return (
 		<path 
 			d={ buildPath(section) }
+			fill={ scaleTest(section.group.id )}
 			transform={ `translate(0, ${ offset })${ shouldScale ? "scale(0)": ""}` }
 			opacity={ animated ? 0.1 : 1 }>
 			{

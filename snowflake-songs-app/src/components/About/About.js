@@ -1,7 +1,6 @@
 import React from 'react';
-import { AnnotationBracket, AnnotationCalloutElbow, AnnotationCalloutCircle } from 'react-annotation';
 
-import { DataProvider, ScalesProvider } from "../../providers";
+import { DataProvider } from "../../providers";
 
 import Snowflake from '../Snowflake/Snowflake';
 import Header from "../Header/Header";
@@ -17,9 +16,6 @@ import Methodology from './Methodology';
 
 const sizeSnowflakes = 300;
 const songExample = DataProvider.getSong(1);
-const sectionsNumber = songExample.sections.length;
-
-const armScales = ScalesProvider.getScales(sizeSnowflakes * 4);
 
 const About = () => (
     <div>
@@ -48,8 +44,7 @@ const About = () => (
 
           <SnowflakeItemsOverall 
             size={ sizeSnowflakes } 
-            song={ songExample } 
-            armScales={ armScales } />
+            song={ songExample } />
 
           <SingleItemLegend 
             size={ sizeSnowflakes } 
@@ -58,7 +53,6 @@ const About = () => (
           <ItemsGroupingLegend 
             size={ sizeSnowflakes } 
             song={ songExample } 
-            armScales={ armScales } 
             width={ sizeSnowflakes } 
             height={ sizeSnowflakes * 0.8 } />
          

@@ -3,7 +3,6 @@ import source from "../data/new-year-songs.json";
 const groupSections = (songData) => {
   // shared constants
   const maxGroupCount = 5;
-  const maxPerGroup = 4;
   // related to the song
   const sectionTotal = songData.sections.length;
   const groupTotal = sectionTotal > maxGroupCount ? maxGroupCount : sectionTotal;

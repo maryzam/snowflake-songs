@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnnotationBracket, AnnotationCalloutElbow, AnnotationCalloutCircle } from 'react-annotation';
+import { AnnotationBracket, AnnotationCalloutCircle } from 'react-annotation';
 
 import { ScalesProvider } from "../../../providers";
 import SnowflakeItem from "../../Snowflake/SnowflakeItem";

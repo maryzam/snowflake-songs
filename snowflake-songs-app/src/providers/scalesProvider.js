@@ -1,6 +1,5 @@
-import React from 'react';
-import DataProvider from "./dataProvider";
 import * as d3 from 'd3';
+import DataProvider from "./dataProvider";
 
 let cache = {
 	scales: null,
@@ -30,7 +29,7 @@ const prepareScales = () => {
 							.range([0, 1])
 							.padding(1);
 
-	const maxDuration = d3.max(sections, d => d.group.order == 0 ? d.duration : 0);
+	const maxDuration = d3.max(sections, d => d.group.order === 0 ? d.duration : 0);
 	const scaleDuration = d3.scaleLinear().domain([0, maxDuration]);
 
 	const scaleGroupColor = d3.scaleOrdinal()
@@ -46,7 +45,7 @@ const prepareScales = () => {
 	};
 }
 
-const getScales = (size = 1, noCache = false) => {
+const getScales = (size, noCache = false) => {
 	if (noCache || !cache.scales) {
 		cache.scales = prepareScales();
 	}
@@ -55,14 +54,16 @@ const getScales = (size = 1, noCache = false) => {
 };
 
 const updateScales = (size) => {
-	if (cache.size == size) {
+	if (cache.size === size) {
 		return;
 	}
-	cache.size = size;
+	if (!!size && size > 0) {
+		cache.size = size;
+	}
 	if (cache.scales == null) {
 		return;
 	}
-  	const maxHeight = size / (5);
+  	const maxHeight = cache.size / (5);
   	const maxWidth = maxHeight * 0.2;
   	cache.scales.loudness.range([0, maxWidth]);
  	cache.scales.duration.range([0, maxHeight]);

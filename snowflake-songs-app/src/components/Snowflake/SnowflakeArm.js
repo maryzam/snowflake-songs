@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
-import * as d3 from 'd3';
+import React from 'react';
 
-import { DataProvider, ScalesProvider } from "../../providers";
+import { ScalesProvider } from "../../providers";
 import SnowflakeItem from "./SnowflakeItem";
 
 const scales = ScalesProvider.getScales();
