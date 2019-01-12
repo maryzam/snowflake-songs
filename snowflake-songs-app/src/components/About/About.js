@@ -54,7 +54,7 @@ const About = () => (
 
           <SingleItemLegend 
             size={ sizeSnowflakes } 
-            song={ songExample } />
+            section={ songExample.sections[0] } />
 
           <ItemsGroupingLegend 
             size={ sizeSnowflakes } 

@@ -1,12 +1,14 @@
 import React from 'react';
+
 import Build from "../../../utils/snowflakesBuild";
+import SnowflakeItem from "../../Snowflake/SnowflakeItem";
 
 const svgMargin = 30;
 const itemsByRow = 4;
 
 const SnowflakeItemsOverall = ({ size, song }) => {
 
-  	const itemsListScales = Build.updateScales(size * 3, Build.prepareScales());
+  	const scales = Build.updateScales(size * 3, Build.prepareScales());
 	const itemsSpace = size / itemsByRow ;
 
 	return (
@@ -17,20 +19,25 @@ const SnowflakeItemsOverall = ({ size, song }) => {
 	        </p>
 	       
 	        <div className="svg-horiz-centered">
+
 	          <svg width={size} height={size}>
-	            <g transform={ `translate(${ svgMargin }, ${ svgMargin })`} >
-	              	<g id={`pattern_${ song.id }`} className="snowflake-section">
-	        		{
-	        			song.sections.map((section,i) => (
-	        					<path 
-	        						key={ section.start }
-	        						d={ Build.buildItem(section, itemsListScales) }
-	        						transform={ `translate(${ i % itemsByRow * itemsSpace }, ${ Math.floor(i / itemsByRow) * itemsSpace })` }
-	        					/>)
-	        				)
-	        		}
-	        		</g>
-	            </g>
+	        
+	            <g className="snowflake-section" transform={ `translate(${ svgMargin }, ${ svgMargin })`} >
+	        	{
+	        		song.sections.map((section,i) => {
+	        			const x = i % itemsByRow * itemsSpace;
+	        			const y = Math.floor(i / itemsByRow) * itemsSpace;
+	        			return (
+		        			<g key={ section.start } transform={ `translate(${ x }, ${ y })` }>
+		        				<SnowflakeItem
+		        					section={ section }
+		        					scales={ scales }
+		        				/>
+		        			</g>
+		        		);
+	        		})
+	        	}
+	        	</g>
 	          </svg>
 	        </div>
 	    </section>

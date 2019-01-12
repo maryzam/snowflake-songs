@@ -2,47 +2,6 @@ import React from 'react';
 import Provider from "../utils/dataProvider";
 import * as d3 from 'd3';
 
-const buildItem = (d, scales) => {
-			const itemHeight = scales.duration(d.duration);
-			const itemHalfWidth = scales.loudness(d.loudness) / 2;
-			const midPos = scales.key(d.key) * itemHeight;
-			const slopePos = scales.tempo(d.tempo) * itemHalfWidth + itemHalfWidth;
-
-			return `M 0 ${itemHeight}
-					Q ${-slopePos} ${midPos * 1.1} ${-itemHalfWidth} ${midPos}
-					Q ${-slopePos} ${midPos * 0.9} 0 0
-					Q ${slopePos} ${midPos * 0.9} ${itemHalfWidth} ${midPos}
-					Q ${slopePos} ${midPos * 1.1}0 0 ${itemHeight}`;
-		};
-
-const renderSongPattern = (song, scales) => {
-			let currentPos = 0;
-			let currentGroup = 0;
-			return (
-				<g id={`pattern_${ song.id }`} className="snowflake-section">
-					{
-						song.sections.map((section) => {
-							const element = (
-								<path
-									key={ section.start }
-									d={ buildItem(section, scales) }
-									transform={ `translate(0, ${ currentPos })` }
-									/*stroke= { this.scales.groupColor(section.group.order) }*/
-									/>
-							);
-
-							if (currentGroup != section.group.id) {
-								currentGroup = section.group.id;
-								currentPos = currentPos + scales.duration(section.duration) + 2;
-							}
-
-							return element;
-						})
-					}
-				</g>
-			);
-		}
-
 const prepareScales = () => {
 	const data = Provider.getAllSongs();
 	const sections = data.flatMap(item => item.sections);
@@ -93,8 +52,6 @@ const updateScales = (size, scales) => {
 
 
 export default {
-  buildItem,
   prepareScales,
   updateScales,
-	renderSongPattern
 };

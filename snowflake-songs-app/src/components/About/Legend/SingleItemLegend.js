@@ -2,42 +2,51 @@ import React from 'react';
 import { AnnotationBracket, AnnotationCalloutElbow, AnnotationCalloutCircle } from 'react-annotation';
 
 import Build from "../../../utils/snowflakesBuild";
+import SnowflakeItem from "../../Snowflake/SnowflakeItem";
 
 const annotColor = "grey";
 const annotMargin = 10;
 
-const SingleItemLegend = ({ size, song }) => {
+const SingleItemLegend = ({ size, section }) => {
 
   	const heightItem = size * 1.3;
- 	const sectionExample = song.sections[0];
-  	const itemScales = Build.updateScales(size * 10, Build.prepareScales());
-
+  	const scales = Build.updateScales(size * 10, Build.prepareScales());
 
  	const itemAnnotations = [
-	    { position : { x: itemScales.loudness(sectionExample.loudness)/2, y: 0, dy: 0, dx: 0}, 
-	      subject: { height: itemScales.duration(sectionExample.duration) },
-	      note: { title:"Duration", label: "is encoded as height of the item",  wrap: 60 }
+	    { 
+	    	position : { x: scales.loudness(section.loudness)/2, y: 0, dy: 0, dx: 0}, 
+	     	subject: { height: scales.duration(section.duration) },
+	      	note: { title:"Duration", label: "is encoded as height of the item",  wrap: 60 }
 	    },
-	    { position : { x: - itemScales.loudness(sectionExample.loudness)/2, y: itemScales.duration(sectionExample.duration) + annotMargin, dy: 0, dx: 0}, 
-	      subject: { width: itemScales.loudness(sectionExample.loudness) },
-	      note: { title:"Loudness", label: "is encoded as width of the item" }
+	    { 
+	    	position : { 
+	    		x: - scales.loudness(section.loudness)/2, 
+	    		y: scales.duration(section.duration) + annotMargin, 
+	    		dy: 0, dx: 0 }, 
+	      	subject: { width: scales.loudness(section.loudness) },
+	      	note: { title:"Loudness", label: "is encoded as width of the item" }
 	    },
-	    { position : { x: - itemScales.loudness(sectionExample.loudness)/2 - annotMargin, y: 0, dy: 0, dx: 0}, 
-	      subject: { height: itemScales.key(sectionExample.key) * itemScales.duration(sectionExample.duration), depth: -10 },
-	      note: { title:"Key", label: "is encoded as the height of the mid point", wrap: 60 }
+	    { 
+	    	position : { 
+	    		x: - scales.loudness(section.loudness)/2 - annotMargin, 
+	    		y: 0, dy: 0, dx: 0 }, 
+	      	subject: { 
+	      		height: scales.key(section.key) * scales.duration(section.duration), 
+	      		depth: -10 },
+	      	note: { title:"Key", label: "is encoded as the height of the mid point", wrap: 60 }
 	    }
 	];
 
 	return (
 		<section>
-	        <p> Every section result in an item giving its specific properties, where scales range are computed from the whole songs list. : </p>
+	        <p> Every section result in an item giving its specific properties, where scales range are computed from the whole songs list: </p>
 	        <div className="svg-horiz-centered">
-	          <svg width={size} height={heightItem}>
-	            <g transform={ `translate(${ size/2 }, ${ heightItem/2 - itemScales.duration(sectionExample.duration)/2 })`} >
-		            <g id={`pattern_${ song.id }`} className="snowflake-section">
-		    			<path 
-		    				key={ sectionExample.start }
-		    				d={ Build.buildItem(sectionExample, itemScales) }
+	          <svg width={ size } height={ heightItem }>
+	            <g transform={ `translate(${ size/2 }, ${ heightItem/2 - scales.duration(section.duration)/2 })`} >
+		            <g className="snowflake-section">
+		    			<SnowflakeItem 
+		    				section={ section }
+		    				scales={ scales }
 		    			/>
 	        		</g>
 	        		{
@@ -66,7 +75,7 @@ const SingleItemLegend = ({ size, song }) => {
 	                note={{"title":"Tempo",
 	                  "label":"is encoded as the curviness",
 	                  "lineType":"horizontal"}}
-	                subject={{"radius":20,"radiusPadding":3}}
+	                subject={{ "radius":20, "radiusPadding":3 }}
 	              />
 	            
 	            </g>

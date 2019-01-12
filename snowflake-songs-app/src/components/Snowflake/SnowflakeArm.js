@@ -2,19 +2,7 @@ import React, { Fragment } from 'react';
 import * as d3 from 'd3';
 
 import Provider from "../../utils/dataProvider";
-
-const buildItem = (d, scales) => {
-			const itemHeight = scales.duration(d.duration);
-			const itemHalfWidth = scales.loudness(d.loudness) / 2;
-			const midPos = scales.key(d.key) * itemHeight;
-			const slopePos = scales.tempo(d.tempo) * itemHalfWidth + itemHalfWidth;
-
-			return `M 0 ${itemHeight} 
-					Q ${-slopePos} ${midPos * 1.1} ${-itemHalfWidth} ${midPos} 
-					Q ${-slopePos} ${midPos * 0.9} 0 0
-					Q ${slopePos} ${midPos * 0.9} ${itemHalfWidth} ${midPos} 
-					Q ${slopePos} ${midPos * 1.1}0 0 ${itemHeight}`;
-		};
+import SnowflakeItem from "./SnowflakeItem";
 
 const prepareScales = () => {
 	const data = Provider.getAllSongs();
@@ -66,49 +54,13 @@ class SnowflakeArm extends React.PureComponent {
 			<g id={`pattern_${ song.id }`} className="snowflake-section">
 				{
 					song.sections.map((section) => {
-						const shouldScale = animated && (section.group.id > 2 || section.group.order > 0);
 						const element = (
-							<path 
-								key={ section.start }
-								d={ buildItem(section, this.scales) }
-								transform={ `translate(0, ${ currentPos })${ shouldScale ? "scale(0)": ""}` }
-								opacity={ animated ? 0.1 : 1 }
-							>
-								{
-									animated 
-									? (
-										<Fragment>
-											<animate attributeName="opacity" 
-								               from="0.1" to="1" fill="freeze"
-								               begin={ `${section.start}s` } 
-								               dur={ `${section.duration}s` }
-								               repeatCount={ 1 } />
-								            {
-								            	shouldScale ?
-								            	(
-								            		<Fragment>
-								            		<animateTransform attributeName="transform"
-													    type="translate" fill="freeze"
-														from={ `0, ${ currentPos }`} 
-														to={ `0, ${ currentPos }` }
-														begin={ `${section.start}s` } 
-													    dur={ `${section.duration}s` }
-													    repeatCount={ 1 } />
-											        <animateTransform attributeName="transform"
-													    type="scale"
-														from="0 0" to="1 1" fill="freeze"
-														begin={ `${section.start}s` } 
-													    dur={ `${section.duration}s` }
-													    repeatCount={ 1 } additive="sum" />
-													</Fragment>
-								            	) : null
-								            }								            
-							            </Fragment>
-               						) : null
-								}
-							</path>
-						);
-
+							<SnowflakeItem
+								section={ section }
+								scales={ this.scales }
+								animated={ animated }
+								offset={ currentPos }
+							/>);
 						if (currentGroup !== section.group.id) {
 							currentGroup = section.group.id;
 							currentPos = currentPos + this.scales.duration(section.duration) + 2;
