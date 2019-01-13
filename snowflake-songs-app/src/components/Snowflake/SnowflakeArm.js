@@ -15,23 +15,24 @@ class SnowflakeArm extends React.PureComponent {
 		
 		let currentPos = 0;
 		let currentGroup = 0;
-		
+		let nextShift = scales.duration(song.sections[0].duration);
 		return (
 			<g id={`pattern_${ song.id }`} className="snowflake-section">
 				{
 					song.sections.map((section) => {
-						const element = (
+						if (currentGroup !== section.group.id) {
+							currentGroup = section.group.id;
+							currentPos = currentPos + nextShift + 2;
+							nextShift = scales.duration(section.duration);
+						}
+						return (
 							<SnowflakeItem
+								info={ `${section.group.id}_${section.group.order}` }
 								key={ section.start }
 								section={ section }
 								animated={ animated }
 								offset={ currentPos }
 							/>);
-						if (currentGroup !== section.group.id) {
-							currentGroup = section.group.id;
-							currentPos = currentPos + scales.duration(section.duration) + 2;
-						}
-						return element;
 					})
 				}
 			</g>

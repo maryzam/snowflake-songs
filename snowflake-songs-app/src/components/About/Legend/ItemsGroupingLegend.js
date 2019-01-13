@@ -30,7 +30,6 @@ const prepareAnotations = (song, scales, offset) => {
 
     let currentPos = 0;
     song.sections.forEach((section) => {
-        console.log(section.group.id, section.group.order);
         if (section.group.order !== 0) { return; }
         armAnnotations.push(
         { 
@@ -44,8 +43,6 @@ const prepareAnotations = (song, scales, offset) => {
         });
         currentPos += scales.duration(section.duration);
     });
-
-    console.log(armAnnotations);
 
     return armAnnotations;
 }
