@@ -2,7 +2,7 @@ import React from 'react';
 import YouTube from 'react-youtube';
 import * as d3 from 'd3';
 
-import Provider from "../utils/dataProvider";
+import { DataProvider } from "../providers";
 
 import Header from "./Header/Header";
 import Footer from "./Footer";
@@ -41,8 +41,8 @@ class Song extends React.PureComponent  {
     
     const { isSongReady, songId } = this.state; 
 
-    const song = Provider.getSong(songId);
-    const lastSong = Provider.getSongsCount() - 1;
+    const song = DataProvider.getSong(songId);
+    const lastSong = DataProvider.getSongsCount() - 1;
     const backgroundPosition = Math.floor(scaleValence(song.valence));
 
     return (
@@ -78,6 +78,7 @@ class Song extends React.PureComponent  {
               videoId={ song.youtubeId }
               onReady={ this.onSongReady } 
               onStateChange={ this.onPlayerStateChanged } 
+              opts={ videoOptions }
             />
 
           </main>

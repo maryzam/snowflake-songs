@@ -1,7 +1,7 @@
 import React from 'react';
-import { AnnotationBracket, AnnotationCalloutElbow, AnnotationCalloutCircle } from 'react-annotation';
+import { AnnotationBracket, AnnotationCalloutCircle } from 'react-annotation';
 
-import Build from "../../../utils/snowflakesBuild";
+import { ScalesProvider } from "../../../providers";
 import SnowflakeItem from "../../Snowflake/SnowflakeItem";
 
 const annotColor = "grey";
@@ -10,7 +10,7 @@ const annotMargin = 10;
 const SingleItemLegend = ({ size, section }) => {
 
   	const heightItem = size * 1.3;
-  	const scales = Build.updateScales(size * 10, Build.prepareScales());
+  	const scales = ScalesProvider.getScales(size * 10);
 
  	const itemAnnotations = [
 	    { 

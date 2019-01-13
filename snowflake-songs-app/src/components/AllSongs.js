@@ -1,18 +1,18 @@
 import React from 'react';
-import Provider from "../utils/dataProvider";
+import { DataProvider } from "../providers";
 
 import Header from "./Header/Header";
 import Footer from "./Footer";
 import SnowflakeCard from "./SnowflakeCard";
 
 const AllSongs = () => {
-    const data = Provider.getAllSongs();
+    const songs = DataProvider.getAllSongs();
     return (
       <article className="all-songs colorful-background dynamic">
         <Header />
         <main className="songs-container">
             {
-              data.map((d) => (
+              songs.map((d) => (
                 <SnowflakeCard 
                   key={d.id} 
                   song={d} 

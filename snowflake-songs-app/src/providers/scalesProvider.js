@@ -1,9 +1,13 @@
-import React from 'react';
-import Provider from "../utils/dataProvider";
 import * as d3 from 'd3';
+import DataProvider from "./dataProvider";
+
+let cache = {
+	scales: null,
+	size: 1
+};
 
 const prepareScales = () => {
-	const data = Provider.getAllSongs();
+	const data = DataProvider.getAllSongs();
 	const sections = data.flatMap(item => item.sections);
 
 	const loudnessRange = d3.extent(sections, d => d.loudness);
@@ -25,7 +29,7 @@ const prepareScales = () => {
 							.range([0, 1])
 							.padding(1);
 
-	const maxDuration = d3.max(sections, d => d.group.order == 0 ? d.duration : 0);
+	const maxDuration = d3.max(sections, d => d.group.order === 0 ? d.duration : 0);
 	const scaleDuration = d3.scaleLinear().domain([0, maxDuration]);
 
 	const scaleGroupColor = d3.scaleOrdinal()
@@ -39,19 +43,33 @@ const prepareScales = () => {
 		duration: scaleDuration,
 		groupColor: scaleGroupColor
 	};
-};
-
-const updateScales = (size, scales) => {
-  const maxHeight = size / (5);
-  const maxWidth = maxHeight * 0.2;
-  scales.loudness.range([0, maxWidth]);
-  scales.duration.range([0, maxHeight]);
-  
-  return scales;
 }
 
+const getScales = (size, noCache = false) => {
+	if (noCache || !cache.scales) {
+		cache.scales = prepareScales();
+	}
+	updateScales(size);
+	return cache.scales;
+};
+
+const updateScales = (size) => {
+	if (cache.size === size) {
+		return;
+	}
+	if (!!size && size > 0) {
+		cache.size = size;
+	}
+	if (cache.scales == null) {
+		return;
+	}
+  	const maxHeight = cache.size / (5);
+  	const maxWidth = maxHeight * 0.2;
+  	cache.scales.loudness.range([0, maxWidth]);
+ 	cache.scales.duration.range([0, maxHeight]);
+}
 
 export default {
-  prepareScales,
+  getScales,
   updateScales,
 };

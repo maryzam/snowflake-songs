@@ -1,24 +1,33 @@
 import React, { Fragment } from 'react';
+import { ScalesProvider } from "../../providers";
 
-const buildPath = (d, scales) => {
-			const itemHeight = scales.duration(d.duration);
-			const itemHalfWidth = scales.loudness(d.loudness) / 2;
-			const midPos = scales.key(d.key) * itemHeight;
-			const slopePos = scales.tempo(d.tempo) * itemHalfWidth + itemHalfWidth;
+import * as d3 from 'd3';
 
-			return `M 0 ${itemHeight} 
-					Q ${-slopePos} ${midPos * 1.1} ${-itemHalfWidth} ${midPos} 
-					Q ${-slopePos} ${midPos * 0.9} 0 0
-					Q ${slopePos} ${midPos * 0.9} ${itemHalfWidth} ${midPos} 
-					Q ${slopePos} ${midPos * 1.1}0 0 ${itemHeight}`;
-		};
+const scales = ScalesProvider.getScales();
 
-const SnowflakeItem = ({ section, scales, animated = false, offset = 0 }) => {
+const buildPath = (section) => {
+	
+	const itemHeight = scales.duration(section.duration);
+	const itemHalfWidth = scales.loudness(section.loudness) / 2;
+	const midPos = scales.key(section.key) * itemHeight;
+	const slopePos = scales.tempo(section.tempo) * itemHalfWidth + itemHalfWidth;
+
+	return `M 0 ${itemHeight} 
+			Q ${-slopePos} ${midPos * 1.1} ${-itemHalfWidth} ${midPos} 
+			Q ${-slopePos} ${midPos * 0.9} 0 0
+			Q ${slopePos} ${midPos * 0.9} ${itemHalfWidth} ${midPos} 
+			Q ${slopePos} ${midPos * 1.1}0 0 ${itemHeight}`;
+};
+
+const scaleTest = d3.scaleOrdinal().domain([0, 1, 2, 3, 4, 5]).range(["red", "green", "red", "green", "red", "green"]);
+
+const SnowflakeItem = ({ section, animated = false, offset = 0 }) => {
 
 	const shouldScale = animated && (section.group.id > 2 || section.group.order > 0);
 	return (
 		<path 
-			d={ buildPath(section, scales) }
+			d={ buildPath(section) }
+			fill={ scaleTest(section.group.id )}
 			transform={ `translate(0, ${ offset })${ shouldScale ? "scale(0)": ""}` }
 			opacity={ animated ? 0.1 : 1 }>
 			{

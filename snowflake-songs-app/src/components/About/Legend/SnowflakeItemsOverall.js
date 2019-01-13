@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Build from "../../../utils/snowflakesBuild";
+import { ScalesProvider } from "../../../providers";
 import SnowflakeItem from "../../Snowflake/SnowflakeItem";
 
 const svgMargin = 30;
@@ -8,7 +8,7 @@ const itemsByRow = 4;
 
 const SnowflakeItemsOverall = ({ size, song }) => {
 
-  	const scales = Build.updateScales(size * 3, Build.prepareScales());
+  	const scales = ScalesProvider.getScales(size * 3);
 	const itemsSpace = size / itemsByRow ;
 
 	return (
